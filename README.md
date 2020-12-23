@@ -14,4 +14,6 @@ La **visualización de imagenes** se utilizará para renderizar tanto el juegado
 Por otra parte el **uso del ratón** se usará para definir la dificultad del videojuego con un pequeño menú al principio. 
 
 
-Link para el documento en [Overleaf](https://www.overleaf.com/8923475662vrgpwqgvxkhg)
+Link de la [Documentación](https://www.overleaf.com/8923475662vrgpwqgvxkhg)
+
+Link del [analisis, desarrollo y funcionalidad](https://www.overleaf.com/5874192221qkqqkqxwmjdk)
