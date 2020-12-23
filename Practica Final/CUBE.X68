@@ -16,8 +16,8 @@ CUBINIT
     MOVE.L D0/D1, -(A7)
     MOVE.W D0,(A0)       ; LOC FIRST X   
     MOVE.W D1, 2(A0)     ; LOC FIRST Y
-    ADD.W #45,D0
-    ADD.W #45,D1 
+    ADD.W #CUBCOS,D0
+    ADD.W #CUBCOS,D1 
     MOVE.W D0,4(A0)      ; LOC SECOND X                
     MOVE.W D1,6(A0)      ; LOC SECOND Y
     MOVE.L (A7)+, D0/D1
@@ -38,6 +38,20 @@ CUBPLOT
 ; OUTPUT - NONE
 ; MODIFIES -NONE
 ;------------------------------------------------------------------------------
+    MOVE.L D0/D1/D2/D3/D4, -(A7)
+    MOVE.B #80,D0
+    MOVE.L #CUBCOLP,D1
+    TRAP #15
+    
+    MOVE.W (A0), D1
+    MOVE.W 2(A0), D2
+    MOVE.W 4(A0), D3
+    MOVE.W 6(A0), D4
+    
+    MOVE.B #88, D0
+    TRAP #15
+    MOVE.L (A7)+, D0/D1/D2/D3/D4
+    RTS
     RTS
 *~Font name~Courier New~
 *~Font size~10~
