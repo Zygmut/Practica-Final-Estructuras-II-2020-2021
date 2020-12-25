@@ -12,6 +12,7 @@
             INCLUDE "SYSCONST.X68"          ; SYSTEM CONSTANTS
             INCLUDE "SYSTEM.X68"            ; SYSTEM CODE
             INCLUDE "CONST.X68"             ; GAME CONSTANTS
+            INCLUDE "RANDOM.X68"            ; PSEUDO - RANDOM GENERATOR
             INCLUDE "PLAYER.X68"            ; PLAYER MANAGER
             INCLUDE "MAP.X68"               ; MAP MANAGER
             INCLUDE "KEY.X68"               ; KEY MANAGER
@@ -22,6 +23,7 @@
 START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
 
             ; TO DO : ADD YOUR GAME INITIALIZATION HERE
+            JSR     RNDINIT
             JSR     PLAYERINIT
             JSR     KEYINIT
             JSR     STAIRSINIT

@@ -1,6 +1,10 @@
 KEYINIT             ; RANDOM POSITION
-            MOVE.W  #SCRWIDTH/2+32, (KEYX)       ; SET PLAYER TO CENTER
-            MOVE.W  #SCRHEIGH/2+32, (KEYY)       ; SET PLAYER TO CENTER
+            MOVE.L D0, -(A7)
+            JSR     RNGX
+            MOVE.W  D0, (KEYX)
+            JSR     RNGY
+            MOVE.W  D0, (KEYY)
+            MOVE.L  (A7)+, D0
             RTS
 KEYUPDT             ; NOTHING
             MOVEM.L D0, -(A7)

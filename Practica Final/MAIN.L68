@@ -1,6 +1,6 @@
-000014A0 Starting Address
+0000152E Starting Address
 Assembler used: EASy68K Editor/Assembler v5.16.01
-Created On: 12/25/2020 2:13:57 PM
+Created On: 12/25/2020 3:42:23 PM
 
 00000000                             1  ; =============================================================================
 00000000                             2  ; TITLE    : EXAMPLE GAME (MAIN PROGRAM)
@@ -10,7 +10,7 @@ Created On: 12/25/2020 2:13:57 PM
 00000000                             6  ; =============================================================================
 00000000                             7  
 00001000                             8              ORG     $1000
-00001000                             9  
+00001000                             9             
 00001000                            10  ; --- CODE INCLUDES -----------------------------------------------------------
 00001000                            11  
 00001000                            12              INCLUDE "SYSCONST.X68"          ; SYSTEM CONSTANTS
@@ -160,8 +160,8 @@ Created On: 12/25/2020 2:13:57 PM
 00001070  123C 0006                156              MOVE.B  #6,D1
 00001074  103C 0020                157              MOVE.B  #32,D0
 00001078  4E4F                     158              TRAP    #15
-0000107A  4239 000014E6            159              CLR.B   (SCRINTCT)              ; PREPARE INTERRUPT FLAG
-00001080  4239 000014E7            160              CLR.B   (SCRCYCCT)              ; PREPARE CYCLE COUNTER
+0000107A  4239 00001578            159              CLR.B   (SCRINTCT)              ; PREPARE INTERRUPT FLAG
+00001080  4239 00001579            160              CLR.B   (SCRCYCCT)              ; PREPARE CYCLE COUNTER
 00001086  027C F8FF                161              ANDI.W  #$F8FF,SR               ; ENABLE INTS
 0000108A  4E75                     162              RTS
 0000108C                           163  
@@ -172,8 +172,8 @@ Created On: 12/25/2020 2:13:57 PM
 0000108C                           168  ; OUTPUT   - NONE
 0000108C                           169  ; MODIFIES - NONE
 0000108C                           170  ; -----------------------------------------------------------------------------
-0000108C  5239 000014E6            171              ADDQ.B  #1,(SCRINTCT)           ; UPDATE INT FLAG/COUNTER
-00001092  5239 000014E7            172              ADDQ.B  #1,(SCRCYCCT)           ; UPDATE CYCLE COUNTER
+0000108C  5239 00001578            171              ADDQ.B  #1,(SCRINTCT)           ; UPDATE INT FLAG/COUNTER
+00001092  5239 00001579            172              ADDQ.B  #1,(SCRCYCCT)           ; UPDATE CYCLE COUNTER
 00001098  4E73                     173              RTE
 0000109A                           174  
 0000109A                           175  ; -----------------------------------------------------------------------------
@@ -204,8 +204,8 @@ Created On: 12/25/2020 2:13:57 PM
 000010B4                           200  ; OUTPUT   - NONE
 000010B4                           201  ; MODIFIES - NONE
 000010B4                           202  ; -----------------------------------------------------------------------------
-000010B4  4239 000014E4            203              CLR.B   (KBDVAL)                ; INIT VARS
-000010BA  4239 000014E5            204              CLR.B   (KBDEDGE)
+000010B4  4239 00001576            203              CLR.B   (KBDVAL)                ; INIT VARS
+000010BA  4239 00001577            204              CLR.B   (KBDEDGE)
 000010C0  21FC 000010CA 0080       205              MOVE.L  #KBDREAD,($80+KBDTRAP*4) ; INSTALL
 000010C8  4E75                     206              RTS
 000010CA                           207  
@@ -227,11 +227,11 @@ Created On: 12/25/2020 2:13:57 PM
 000010DE  223C 28272625            223              MOVE.L  #KBDDOWN<<24+KBDRIGHT<<16+KBDUP<<8+KBDLEFT,D1
 000010E4  4E4F                     224              TRAP    #15
 000010E6  6100 001E                225              BSR     .STORE                  ; STORE KEY UP,DOWN,LEFT AND RIGTH.
-000010EA  1039 000014E4            226              MOVE.B  (KBDVAL),D0             ; COMPUTE EDGE.
+000010EA  1039 00001576            226              MOVE.B  (KBDVAL),D0             ; COMPUTE EDGE.
 000010F0  4600                     227              NOT.B   D0                      ; EDGE=NOT(PREVIOUS) AND CURRENT.
 000010F2  C002                     228              AND.B   D2,D0
-000010F4  13C2 000014E4            229              MOVE.B  D2,(KBDVAL)             ; STORE VALUES (PRESS AND EDGE)
-000010FA  13C0 000014E5            230              MOVE.B  D0,(KBDEDGE)
+000010F4  13C2 00001576            229              MOVE.B  D2,(KBDVAL)             ; STORE VALUES (PRESS AND EDGE)
+000010FA  13C0 00001577            230              MOVE.B  D0,(KBDEDGE)
 00001100  4CDF 000F                231              MOVEM.L (A7)+,D0-D3
 00001104  4E73                     232              RTE
 00001106                           233  
@@ -258,7 +258,7 @@ Created On: 12/25/2020 2:13:57 PM
 00001114                           254  ; MODIFIES - NONE
 00001114                           255  ; -----------------------------------------------------------------------------
 00001114  48E7 8080                256              MOVEM.L D0/A0,-(A7)
-00001118  41F9 00001500            257              LEA     DMMDATA,A0
+00001118  41F9 00001580            257              LEA     DMMDATA,A0
 0000111E  303C 0031                258              MOVE.W  #DMMBNUM-1,D0
 00001122  30BC 0000                259  .LOOP       MOVE.W  #DMMSYSID,(A0)
 00001126  D1FC 00000040            260              ADD.L   #DMMBSIZE,A0
@@ -274,11 +274,11 @@ Created On: 12/25/2020 2:13:57 PM
 00001136                           270  ; OUTPUT   - A0   : POINTER TO THE DATA OR 0 IF NOT FOUND
 00001136                           271  ; MODIFIES - NONE (ASIDE OF OUTPUT)
 00001136                           272  ; -----------------------------------------------------------------------------
-00001136  41F9 00001500            273              LEA     DMMDATA,A0
+00001136  41F9 00001580            273              LEA     DMMDATA,A0
 0000113C  4A58                     274  DMMFRLOP    TST.W   (A0)+
 0000113E  6600 0016                275              BNE     DMMFRFND
 00001142  D1FC 0000003E            276              ADD.L   #DMMBSIZE-2,A0
-00001148  B1FC 0000217F            277  DMMFRCOM    CMP.L   #DMMDATA+DMMBSIZE*DMMBNUM-1,A0
+00001148  B1FC 000021FF            277  DMMFRCOM    CMP.L   #DMMDATA+DMMBSIZE*DMMBNUM-1,A0
 0000114E  6DEC                     278              BLT     DMMFRLOP
 00001150  207C 00000000            279              MOVE.L  #0,A0
 00001156  4E75                     280  DMMFRFND    RTS
@@ -307,11 +307,11 @@ Created On: 12/25/2020 2:13:57 PM
 0000116E                           303  ; OUTPUT   - A0   : POINTER TO THE DATA OR 0 IF NOT FOUND
 0000116E                           304  ; MODIFIES - NONE (ASIDE OF OUTPUT)
 0000116E                           305  ; -----------------------------------------------------------------------------
-0000116E  41F9 00001500            306              LEA     DMMDATA,A0
+0000116E  41F9 00001580            306              LEA     DMMDATA,A0
 00001174  B058                     307  DMMFLOOP    CMP.W   (A0)+,D0
 00001176  6700 0016                308              BEQ     DMMFFND
 0000117A  D1FC 0000003E            309              ADD.L   #DMMBSIZE-2,A0
-00001180  B1FC 0000217F            310  DMMFCOM     CMP.L   #DMMDATA+DMMBSIZE*DMMBNUM-1,A0
+00001180  B1FC 000021FF            310  DMMFCOM     CMP.L   #DMMDATA+DMMBSIZE*DMMBNUM-1,A0
 00001186  6DEC                     311              BLT     DMMFLOOP
 00001188  207C 00000000            312              MOVE.L  #0,A0
 0000118E  4E75                     313  DMMFFND     RTS
@@ -383,339 +383,418 @@ Created On: 12/25/2020 2:13:57 PM
 000011D6  =00CCE0EA                379  TILELIGH    EQU     $00CCE0EA  ; TILE SET LIGHT COLOR
 000011D6  =00A38099                380  TILEDETA    EQU     $00A38099  ; TILE SET DETAIL COLOR
 000011D6                           381  
-000011D6= 594F 5520 444F 2...      382  NOKEYSTRING    DC.W   'YOU DO NOT HAVE ANY KEYS', 0
+000011D6= 594F 5520 444F 2...      382  NOKEYSTRING DC.W   'YOU DO NOT HAVE ANY KEYS', 0
 000011F0                           383  
-000011F0                           384  -------------------- end include --------------------
-000011F0                           385              INCLUDE "PLAYER.X68"            ; PLAYER MANAGER
-000011F0                           386  ; =============================================================================
-000011F0                           387  ; TITLE    : PLAYER MANAGER
-000011F0                           388  ; AUTHOR   : 
-000011F0                           389  ; COMMENTS : 
-000011F0                           390  ; =============================================================================
-000011F0                           391  
-000011F0                           392  
-000011F0                           393  PLAYERINIT
-000011F0  33FC 0140 00002180       394              MOVE.W #SCRWIDTH/2, (PLAYERX)       ; SET PLAYER TO CENTER
-000011F8  33FC 00F0 00002182       395              MOVE.W #SCRHEIGH/2, (PLAYERY)       ; SET PLAYER TO CENTER
-00001200  4E75                     396              RTS
-00001202                           397  
-00001202                           398  PLAYERUPDT
-00001202  0839 0000 000014E4       399              BTST.B  #KBDBITLF, (KBDVAL)         ; LEFT KEY PRESSED
-0000120A  6600 0028                400              BNE     .MOVEL
-0000120E  0839 0002 000014E4       401              BTST.B  #KBDBITRT, (KBDVAL)         ; RIGHT KEY PRESSED
-00001216  6600 0034                402              BNE     .MOVER
-0000121A  0839 0001 000014E4       403              BTST.B  #KBDBITUP, (KBDVAL)         ; UP KEY PRESSED
-00001222  6600 0040                404              BNE     .MOVEU
-00001226  0839 0003 000014E4       405              BTST.B  #KBDBITDN, (KBDVAL)         ; DOWN KEY PRESSED
-0000122E  6600 004C                406              BNE     .MOVED
-00001232  4E75                     407              RTS
-00001234                           408  .MOVEL
-00001234  0C79 0070 00002180       409              CMP.W   #TILEDIM/2+(SCRWIDTH-SCRHEIGH)-64, (PLAYERX)       ; LEFT BOUNDARY
-0000123C  6E00 0004                410              BGT     .RMVEL
-00001240  4E75                     411              RTS
-00001242                           412  .RMVEL
-00001242  0479 0020 00002180       413              SUB.W   #TILEDIM, (PLAYERX)         ; MOVE LEFT
-0000124A  4E75                     414              RTS
-0000124C                           415  
-0000124C                           416  .MOVER
-0000124C  0C79 020F 00002180       417              CMP.W   #SCRHEIGH-1-TILEDIM/2+64, (PLAYERX)    ; RIGHT BOUNDARY
-00001254  6D00 0004                418              BLT     .RMVER
-00001258  4E75                     419              RTS
-0000125A                           420  .RMVER
-0000125A  0679 0020 00002180       421              ADD.W   #TILEDIM, (PLAYERX)         ; MOVE RIGHT
-00001262  4E75                     422              RTS
-00001264                           423  
-00001264                           424  .MOVEU
-00001264  0C79 0010 00002182       425              CMP.W   #TILEDIM/2, (PLAYERY)       ; TOP BOUNDARY
-0000126C  6E00 0004                426              BGT     .RMVEU
-00001270  4E75                     427              RTS
-00001272                           428  .RMVEU
-00001272  0479 0020 00002182       429              SUB.W   #TILEDIM, (PLAYERY)         ; MOVE UP
-0000127A  4E75                     430              RTS
-0000127C                           431  
-0000127C                           432  .MOVED
-0000127C  0C79 01CF 00002182       433              CMP.W   #SCRHEIGH-1-TILEDIM/2, (PLAYERY)    ; BOTTOM BOUNDARY
-00001284  6D00 0004                434              BLT     .RMVED
-00001288  4E75                     435              RTS
-0000128A                           436  .RMVED
-0000128A  0679 0020 00002182       437              ADD.W   #TILEDIM, (PLAYERY)         ; MOVE DOWN
-00001292  4E75                     438              RTS
-00001294                           439  
-00001294                           440  PLAYERPLOT
-00001294  48E7 F800                441              MOVEM.L D0-D4, -(A7)
-00001298  103C 0050                442              MOVE.B  #80, D0                     ; SET PEN CALL
-0000129C  223C 00CCE0EA            443              MOVE.L  #TILELIGH, D1               ; SET PEN COLOR
-000012A2  4E4F                     444              TRAP    #15                         
-000012A4                           445              
-000012A4  5240                     446              ADDQ.W  #1, D0                      ; SET FILL CALL
-000012A6  223C 00CCE0EA            447              MOVE.L  #TILELIGH, D1               ; SET FILL COLOR
-000012AC  4E4F                     448              TRAP    #15
-000012AE                           449              
-000012AE  3239 00002180            450              MOVE.W  (PLAYERX), D1               ; D1 = X CENTER
-000012B4  3439 00002182            451              MOVE.W  (PLAYERY), D2               ; D1 = Y CENTER
-000012BA  3601                     452              MOVE.W  D1, D3
-000012BC  3802                     453              MOVE.W  D2, D4
-000012BE  0441 0010                454              SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
-000012C2  0442 0010                455              SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
-000012C6  0644 0010                456              ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
-000012CA  0643 0010                457              ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
-000012CE                           458  
-000012CE  303C 0057                459              MOVE.W  #87, D0
-000012D2  4E4F                     460              TRAP    #15
-000012D4  4CDF 001F                461              MOVEM.L (A7)+,D0-D4
-000012D8  4E75                     462              RTS
-000012D8  4E75                     463  -------------------- end include --------------------
-000012DA                           464              INCLUDE "MAP.X68"               ; MAP MANAGER
-000012DA                           465  MAPINIT
-000012DA  4E75                     466          RTS      
-000012DC                           467  MAPUPDT
-000012DC  4E75                     468          RTS
-000012DE                           469  MAPPLOT
-000012DE  48E7 F800                470          MOVEM.L D0-D4, -(A7)
-000012E2                           471  
-000012E2  103C 0050                472          MOVE.B  #80, D0                     ; SET PEN CALL
-000012E6  223C 00745B6D            473          MOVE.L  #TILEDARK, D1               ; SET PEN COLOR
-000012EC  4E4F                     474          TRAP    #15                         
-000012EE                           475              
-000012EE  5240                     476          ADDQ.W  #1, D0                      ; SET FILL CALL
-000012F0  223C 00745B6D            477          MOVE.L  #TILEDARK, D1               ; SET FILL COLOR
-000012F6  4E4F                     478          TRAP    #15
-000012F8                           479  
-000012F8  4241                     480          CLR     D1                          ; LEFT BORDER
-000012FA  4242                     481          CLR     D2                      
-000012FC  363C 004F                482          MOVE.W  #79, D3
-00001300  383C 01E0                483          MOVE.W  #SCRHEIGH, D4
-00001304  303C 0057                484          MOVE.W  #87, D0
-00001308  4E4F                     485          TRAP    #15
-0000130A                           486  
-0000130A  323C 0231                487          MOVE.W  #561, D1                    ; RIGHT BORDER                                
-0000130E  363C 0280                488          MOVE.W  #SCRWIDTH, D3
-00001312  4E4F                     489          TRAP    #15
-00001314                           490  
-00001314  4240                     491          CLR     D0
-00001316  4241                     492          CLR     D1
-00001318                           493  
-00001318  103C 0050                494          MOVE.B  #80, D0                     ; SET PEN CALL
-0000131C  223C 00A38099            495          MOVE.L  #TILEDETA, D1               ; SET PEN COLOR
-00001322  4E4F                     496          TRAP    #15                         
-00001324                           497              
-00001324  5240                     498          ADDQ.W  #1, D0                      ; SET FILL CALL
-00001326  223C 00A38099            499          MOVE.L  #TILEDETA, D1               ; SET FILL COLOR
-0000132C  4E4F                     500          TRAP    #15
-0000132E                           501  
-0000132E  323C 0091                502          MOVE.W  #145, D1                    ; FLOOR                      
-00001332  363C 01EF                503          MOVE.W  #495, D3
-00001336  4E4F                     504          TRAP    #15
-00001338  4CDF 001F                505          MOVEM.L (A7)+,D0-D4
-0000133C                           506  
-0000133C  4E75                     507          RTS
-0000133C  4E75                     508  -------------------- end include --------------------
-0000133E                           509              INCLUDE "KEY.X68"               ; KEY MANAGER
-0000133E                           510  KEYINIT             ; RANDOM POSITION
-0000133E  33FC 0160 00002184       511              MOVE.W  #SCRWIDTH/2+32, (KEYX)       ; SET PLAYER TO CENTER
-00001346  33FC 0110 00002186       512              MOVE.W  #SCRHEIGH/2+32, (KEYY)       ; SET PLAYER TO CENTER
-0000134E  4E75                     513              RTS
-00001350                           514  KEYUPDT             ; NOTHING
-00001350  48E7 8000                515              MOVEM.L D0, -(A7)
-00001354  3039 00002184            516              MOVE.W  (KEYX), D0
-0000135A  B079 00002180            517              CMP.W   (PLAYERX), D0
-00001360  6600 001A                518              BNE     .END
-00001364  3039 00002186            519              MOVE.W  (KEYY), D0
-0000136A  B079 00002182            520              CMP.W   (PLAYERY), D0
-00001370  6600 000A                521              BNE     .END
-00001374  13FC 0001 0000218C       522              MOVE.B  #1, (KEYOBTEINED)           ; THE PLAYER IS IN THE POSITION OF THE KEY
-0000137C                           523  .END
-0000137C  4CDF 0001                524              MOVEM.L (A7)+, D0
-00001380  4E75                     525              RTS
-00001382                           526  
-00001382                           527  KEYPLOT             ; LIGHT BORDERED CIRCLE
-00001382  0C39 0001 0000218C       528              CMP.B   #1, (KEYOBTEINED)
-0000138A  6700 003C                529              BEQ     .NOKEY
-0000138E  48E7 F800                530              MOVEM.L D0-D4, -(A7)
-00001392  103C 0050                531              MOVE.B  #80, D0                     ; SET PEN CALL
-00001396  223C 00CCE0EA            532              MOVE.L  #TILELIGH, D1               ; SET PEN COLOR
-0000139C  4E4F                     533              TRAP    #15                         
-0000139E                           534              
-0000139E  3239 00002184            535              MOVE.W  (KEYX), D1               ; D1 = X CENTER
-000013A4  3439 00002186            536              MOVE.W  (KEYY), D2               ; D1 = Y CENTER
-000013AA  3601                     537              MOVE.W  D1, D3
-000013AC  3802                     538              MOVE.W  D2, D4
-000013AE  0441 0010                539              SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
-000013B2  0442 0010                540              SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
-000013B6  0644 0010                541              ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
-000013BA  0643 0010                542              ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
-000013BE                           543  
-000013BE  303C 005B                544              MOVE.W  #91, D0
-000013C2  4E4F                     545              TRAP    #15
-000013C4  4CDF 001F                546              MOVEM.L (A7)+,D0-D4
-000013C8                           547  .NOKEY            
-000013C8  4E75                     548              RTS
-000013C8  4E75                     549  -------------------- end include --------------------
-000013CA                           550              INCLUDE "STAIRS.X68"            ; STAIR MANAGER 
-000013CA                           551  STAIRSINIT          ; RANDOM POSTION
-000013CA  33FC 0120 00002188       552              MOVE.W #SCRWIDTH/2-32, (STAIRSX)       ; SET PLAYER TO CENTER
-000013D2  33FC 00D0 0000218A       553              MOVE.W #SCRHEIGH/2-32, (STAIRSY)       ; SET PLAYER TO CENTER
-000013DA  4E75                     554              RTS
-000013DC                           555  STAIRSUPDT          ; NOTHING
-000013DC  48E7 C000                556              MOVEM.L D0-D1, -(A7)
-000013E0  3039 00002188            557              MOVE.W  (STAIRSX), D0
-000013E6  B079 00002180            558              CMP.W   (PLAYERX), D0
-000013EC  6600 004C                559              BNE     .END
-000013F0  3039 0000218A            560              MOVE.W  (STAIRSY), D0
-000013F6  B079 00002182            561              CMP.W   (PLAYERY), D0
-000013FC  6600 003C                562              BNE     .END
-00001400                           563              ; THE PLAYER IS IN THE POSITION OF THE STAIRS
-00001400  0C39 0001 0000218C       564              CMP.B   #1, (KEYOBTEINED)
-00001408  6600 0016                565              BNE     .NOKEY
-0000140C  4EB8 133E                566              JSR     KEYINIT
-00001410  4EB8 13CA                567              JSR     STAIRSINIT
-00001414  13FC 0000 0000218C       568              MOVE.B  #0, (KEYOBTEINED)
-0000141C  6000 001C                569              BRA     .END
-00001420                           570  .NOKEY      ; SAME POSITION NO KEY
-00001420                           571  
-00001420  303C 0051                572              MOVE.W  #81, D0                      ; SET FILL CALL
-00001424  7200                     573              MOVE.L  #00000000, D1               ; SET FILL COLOR
-00001426  4E4F                     574              TRAP    #15
-00001428                           575  
-00001428  43F8 11D6                576              LEA     NOKEYSTRING, A1
-0000142C  323C 00DC                577              MOVE.W  #SCRWIDTH/2-100, D1
-00001430  343C 003C                578              MOVE.W  #SCRHEIGH/8, D2
-00001434                           579  
-00001434  303C 005F                580              MOVE.W #95, D0
-00001438  4E4F                     581              TRAP    #15
-0000143A                           582  
-0000143A                           583  .END
-0000143A  4CDF 0003                584              MOVEM.L (A7)+, D0-D1
-0000143E  4E75                     585              RTS
-00001440  4E75                     586              RTS
-00001442                           587  STAIRSPLOT          ; LIGHT FILLED CIRCLE
-00001442                           588             
-00001442  48E7 F800                589              MOVEM.L D0-D4, -(A7)
-00001446  103C 0050                590              MOVE.B  #80, D0                     ; SET PEN CALL
-0000144A  223C 00CCE0EA            591              MOVE.L  #TILELIGH, D1               ; SET PEN COLOR
-00001450  4E4F                     592              TRAP    #15        
-00001452                           593  
-00001452  5240                     594              ADDQ.W  #1, D0                      ; SET FILL CALL
-00001454  223C 00CCE0EA            595              MOVE.L  #TILELIGH, D1               ; SET FILL COLOR
-0000145A  4E4F                     596              TRAP    #15                 
-0000145C                           597              
-0000145C  3239 00002188            598              MOVE.W  (STAIRSX), D1               ; D1 = X CENTER
-00001462  3439 0000218A            599              MOVE.W  (STAIRSY), D2               ; D1 = Y CENTER
-00001468  3601                     600              MOVE.W  D1, D3
-0000146A  3802                     601              MOVE.W  D2, D4
-0000146C  0441 0010                602              SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
-00001470  0442 0010                603              SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
-00001474  0644 0010                604              ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
-00001478  0643 0010                605              ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
-0000147C                           606              
-0000147C  0C39 0001 0000218C       607              CMP.B  #1, (KEYOBTEINED)
-00001484  6700 000E                608              BEQ     .KEYOBTEINED
-00001488  303C 0058                609              MOVE.W  #88, D0
-0000148C  4E4F                     610              TRAP    #15
-0000148E                           611  
-0000148E  4CDF 001F                612              MOVEM.L (A7)+,D0-D4
-00001492                           613  
-00001492  4E75                     614              RTS
-00001494                           615  .KEYOBTEINED
-00001494  303C 005B                616              MOVE.W  #91, D0
-00001498  4E4F                     617              TRAP    #15
-0000149A                           618  
-0000149A  4CDF 001F                619              MOVEM.L (A7)+,D0-D4
-0000149E  4E75                     620              RTS
-000014A0                           621  
-000014A0                           622  
-000014A0                           623  -------------------- end include --------------------
-000014A0                           624  
-000014A0                           625  ; --- INITIALIZE --------------------------------------------------------------
-000014A0                           626  
-000014A0  4EB8 1000                627  START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
-000014A4                           628  
-000014A4                           629              ; TO DO : ADD YOUR GAME INITIALIZATION HERE
-000014A4  4EB8 11F0                630              JSR     PLAYERINIT
-000014A8  4EB8 133E                631              JSR     KEYINIT
-000014AC  4EB8 13CA                632              JSR     STAIRSINIT
-000014B0                           633  ; --- UPDATE ------------------------------------------------------------------
-000014B0                           634  
-000014B0  4E40                     635  .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
-000014B2                           636  
-000014B2                           637              ; TO DO : ADD YOUR GAME UPDATE HERE
-000014B2                           638  
-000014B2  4EB8 1202                639              JSR     PLAYERUPDT
-000014B6  4EB8 1350                640              JSR     KEYUPDT
-000014BA  4EB8 13DC                641              JSR     STAIRSUPDT
-000014BE                           642  ; --- WAIT SYNCH --------------------------------------------------------------
-000014BE                           643  
-000014BE  4A39 000014E6            644  .WINT       TST.B   (SCRINTCT)              ; WAIT FOR INTERRUPT
-000014C4  67F8                     645              BEQ     .WINT
-000014C6  4239 000014E6            646              CLR.B   (SCRINTCT)
-000014CC                           647  
-000014CC                           648  ; --- PLOT --------------------------------------------------------------------
-000014CC                           649  
-000014CC                           650              ; TO DO : ADD YOUR GAME PLOT HERE
-000014CC                           651              
-000014CC  4EB8 12DE                652              JSR MAPPLOT
-000014D0  4EB8 1294                653              JSR PLAYERPLOT
-000014D4  4EB8 1382                654              JSR KEYPLOT
-000014D8  4EB8 1442                655              JSR STAIRSPLOT
-000014DC                           656  
-000014DC  4E41                     657              TRAP    #SCRTRAP                ; SHOW GRAPHICS
-000014DE  60D0                     658              BRA     .LOOP                   ; MAIN LOOP
-000014E0  FFFF FFFF                659              SIMHALT
-000014E4                           660  
-000014E4                           661  ; --- VARIABLES ---------------------------------------------------------------
-000014E4                           662  
-000014E4                           663              INCLUDE "SYSVAR.X68"
-000014E4                           664  ; =============================================================================
-000014E4                           665  ; TITLE    : SYSTEM VARIABLES
-000014E4                           666  ; AUTHOR   : ANTONI BURGUERA
-000014E4                           667  ; COMMENTS : NOTE THAT ALL THESE VARS ARE USED TO SHARE DATA FROM SYSTEM TO
-000014E4                           668  ;            USER. THUS THEY MUST NOT BE IN PROTECTED MEMORY.
-000014E4                           669  ;            NOTE THAT USING DMMDATA IN SUCH WAY IS A BAD IDEA, AS USER
-000014E4                           670  ;            APPLICATIONS CAN ALSO FREE OR CHANGE OWNERSHIP. NONETHELESS, FOR
-000014E4                           671  ;            THE SAKE OF THIS EXAMPLE THIS IS GOOD ENOUGH.
-000014E4                           672  ; HISTORY  : XX-XXX-201X - CREATION
-000014E4                           673  ;            11-OCT-2020 - MINOR CHANGES
-000014E4                           674  ; =============================================================================
-000014E4                           675  
-000014E4                           676  ; --- KEYBOARD RELATED VARIABLES ----------------------------------------------
-000014E4                           677  
-000014E4                           678  KBDVAL      DS.B    1                       ; KEY PRESSED=1
-000014E5                           679  KBDEDGE     DS.B    1                       ; KEY CHANGED=1
-000014E6                           680  
-000014E6                           681              DS.W    0
-000014E6                           682  
-000014E6                           683  ; --- SCREEN RELATED VARIABLES ------------------------------------------------
-000014E6                           684  
-000014E6                           685  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER/FLAG
-000014E7                           686  SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
-000014E8                           687              DS.W    0
-000014E8                           688  
-000014E8                           689  ; --- DYNAMIC MEMORY VARIABLES ------------------------------------------------
-000014E8                           690  
-00001500                           691              ORG     (*+DMMBSIZE-1)&-DMMBSIZE ; ALIGN TO DMMBSIZE
-00001500                           692  DMMDATA     DS.B    DMMBSIZE*DMMBNUM        ; DYNAMIC MEMORY ALLOCATION SPACE
-00002180                           693              DS.W    0                       ; JUST IN CASE (SIZE IS POW OF TWO)
-00002180                           694  -------------------- end include --------------------
-00002180                           695              INCLUDE "VAR.X68"
-00002180                           696  ; =============================================================================
-00002180                           697  ; TITLE    : GAME VARIABLES
-00002180                           698  ; AUTHOR   :
-00002180                           699  ; HISTORY  :
-00002180                           700  ; =============================================================================
-00002180                           701  
-00002180                           702  ; PLAYER
-00002180                           703  PLAYERX     DS.W    1   ; PLAYER X COORDINATE
-00002182                           704  PLAYERY     DS.W    1   ; PLAYER Y COORDINATE
-00002184                           705  
-00002184                           706  KEYX        DS.W    1   ; KEY X COORDINATE
-00002186                           707  KEYY        DS.W    1   ; KEY Y COORDINATE
-00002188                           708  
-00002188                           709  STAIRSX     DS.W    1   ; STARIS X COORDINATE
-0000218A                           710  STAIRSY     DS.W    1   ; STAIRS X COORDINATE
-0000218C                           711  
-0000218C= 00                       712  KEYOBTEINED DC.B    0   ; "BOOLEAN" VALUE, SELF EXPLANATORY 
-0000218C= 00                       713  -------------------- end include --------------------
-0000218D                           714              END    START
+000011F0= 0080 01E0 0200 0...      384  XVALUES     DC.W    $80, $1E0, $200, $1A0, $C0, $A0, $180, $E0, $60, $100
+00001204= 0220 0120 01C0 0...      385              DC.W    $220, $120, $1C0, $140, $160
+0000120E                           386  
+0000120E= 00B0 0150 0030 0...      387  YVALUES     DC.W    $B0, $150, $30, $10, $F0, $70, $90, $50, $D0, $190
+00001222= 01D0 0130 0170 0...      388              DC.W    $1D0, $130, $170, $1B0, $110
+0000122C                           389  
+0000122C                           390  -------------------- end include --------------------
+0000122C                           391              INCLUDE "RANDOM.X68"            ; PSEUDO - RANDOM GENERATOR
+0000122C                           392  ; =============================================================================
+0000122C                           393  ; TITLE    : PSEUDO-RANDOM NUMBER GENERATOR
+0000122C                           394  ; AUTHOR   : ANTONI BURGUERA
+0000122C                           395  ; COMMENTS : VERY LAZY AND STUPID "ALGORITHM" IMPLEMENTED.
+0000122C                           396  ; HISTORY  : XX-XXX-201X - CREATION
+0000122C                           397  ;            11-OCT-2020 - MINOR CHANGES
+0000122C                           398  ; =============================================================================
+0000122C                           399  
+0000122C                           400  ; -----------------------------------------------------------------------------
+0000122C                           401  RNDINIT
+0000122C                           402  ; INITIALIZES RANDOM NUMBER GENERATOR
+0000122C                           403  ; INPUT    - NONE
+0000122C                           404  ; OUTPUT   - NONE
+0000122C                           405  ; MODIFIES - NONE
+0000122C                           406  ; -----------------------------------------------------------------------------
+0000122C  4279 00002210            407              CLR     (RNGXINDEX)
+00001232  4279 00002212            408              CLR     (RNGYINDEX)
+00001238                           409  
+00001238  4E75                     410              RTS
+0000123A                           411  ; -----------------------------------------------------------------------------
+0000123A                           412  RNGX
+0000123A                           413  ; PROVIDES A PSEUDO-RANDOM BYTE
+0000123A                           414  ; INPUT    - NONE
+0000123A                           415  ; OUTPUT   - D0.L RANDOM VALUE (ONLY BYTE)
+0000123A                           416  ; MODIFIES - NONE (ASIDE OF OUTPUT)
+0000123A                           417  ; -----------------------------------------------------------------------------
+0000123A  2F08                     418              MOVE.L  A0,-(A7)
+0000123C                           419  
+0000123C  41F8 11F0                420              LEA     XVALUES, A0
+00001240  4280                     421              CLR.L   D0
+00001242                           422              
+00001242  1039 00002210            423              MOVE.B  (RNGXINDEX), D0
+00001248  E348                     424              LSL.W   #1, D0     
+0000124A  D0C0                     425              ADD.W   D0, A0
+0000124C  3010                     426              MOVE.W  (A0), D0
+0000124E  5239 00002210            427              ADDQ.B  #1, (RNGXINDEX)
+00001254                           428              
+00001254  205F                     429              MOVE.L  (A7)+, A0
+00001256  4E75                     430              RTS
+00001258                           431  
+00001258                           432  RNGY
+00001258                           433  ; PROVIDES A PSEUDO-RANDOM BYTE
+00001258                           434  ; INPUT    - NONE
+00001258                           435  ; OUTPUT   - D0.L RANDOM VALUE (ONLY BYTE)
+00001258                           436  ; MODIFIES - NONE (ASIDE OF OUTPUT)
+00001258                           437  ; -----------------------------------------------------------------------------
+00001258  2F08                     438              MOVE.L  A0,-(A7)
+0000125A                           439  
+0000125A  41F8 120E                440              LEA     YVALUES, A0
+0000125E  4280                     441              CLR.L   D0
+00001260                           442              
+00001260  1039 00002212            443              MOVE.B  (RNGYINDEX), D0
+00001266  E348                     444              LSL.W   #1, D0  
+00001268  D0C0                     445              ADD.W   D0, A0
+0000126A  3010                     446              MOVE.W  (A0), D0
+0000126C  5239 00002212            447              ADDQ.B  #1, (RNGYINDEX)
+00001272  205F                     448              MOVE.L  (A7)+, A0
+00001274  4E75                     449              RTS
+00001276                           450  
+00001276                           451  ; UPDATE RANDOM VALUES TO HAVE ONLY CENTER VALUES OF THE "GRID"
+00001276                           452  -------------------- end include --------------------
+00001276                           453              INCLUDE "PLAYER.X68"            ; PLAYER MANAGER
+00001276                           454  ; =============================================================================
+00001276                           455  ; TITLE    : PLAYER MANAGER
+00001276                           456  ; AUTHOR   : 
+00001276                           457  ; COMMENTS : 
+00001276                           458  ; =============================================================================
+00001276                           459  
+00001276                           460  
+00001276                           461  PLAYERINIT
+00001276  33FC 0140 00002200       462              MOVE.W #SCRWIDTH/2, (PLAYERX)       ; SET PLAYER TO CENTER
+0000127E  33FC 00F0 00002202       463              MOVE.W #SCRHEIGH/2, (PLAYERY)       ; SET PLAYER TO CENTER
+00001286  4E75                     464              RTS
+00001288                           465  
+00001288                           466  PLAYERUPDT
+00001288  0839 0000 00001576       467              BTST.B  #KBDBITLF, (KBDVAL)         ; LEFT KEY PRESSED
+00001290  6600 0028                468              BNE     .MOVEL
+00001294  0839 0002 00001576       469              BTST.B  #KBDBITRT, (KBDVAL)         ; RIGHT KEY PRESSED
+0000129C  6600 0034                470              BNE     .MOVER
+000012A0  0839 0001 00001576       471              BTST.B  #KBDBITUP, (KBDVAL)         ; UP KEY PRESSED
+000012A8  6600 0040                472              BNE     .MOVEU
+000012AC  0839 0003 00001576       473              BTST.B  #KBDBITDN, (KBDVAL)         ; DOWN KEY PRESSED
+000012B4  6600 004C                474              BNE     .MOVED
+000012B8  4E75                     475              RTS
+000012BA                           476  .MOVEL
+000012BA  0C79 0070 00002200       477              CMP.W   #TILEDIM/2+(SCRWIDTH-SCRHEIGH)-64, (PLAYERX)       ; LEFT BOUNDARY
+000012C2  6E00 0004                478              BGT     .RMVEL
+000012C6  4E75                     479              RTS
+000012C8                           480  .RMVEL
+000012C8  0479 0020 00002200       481              SUB.W   #TILEDIM, (PLAYERX)         ; MOVE LEFT
+000012D0  4E75                     482              RTS
+000012D2                           483  
+000012D2                           484  .MOVER
+000012D2  0C79 020F 00002200       485              CMP.W   #SCRHEIGH-1-TILEDIM/2+64, (PLAYERX)    ; RIGHT BOUNDARY
+000012DA  6D00 0004                486              BLT     .RMVER
+000012DE  4E75                     487              RTS
+000012E0                           488  .RMVER
+000012E0  0679 0020 00002200       489              ADD.W   #TILEDIM, (PLAYERX)         ; MOVE RIGHT
+000012E8  4E75                     490              RTS
+000012EA                           491  
+000012EA                           492  .MOVEU
+000012EA  0C79 0010 00002202       493              CMP.W   #TILEDIM/2, (PLAYERY)       ; TOP BOUNDARY
+000012F2  6E00 0004                494              BGT     .RMVEU
+000012F6  4E75                     495              RTS
+000012F8                           496  .RMVEU
+000012F8  0479 0020 00002202       497              SUB.W   #TILEDIM, (PLAYERY)         ; MOVE UP
+00001300  4E75                     498              RTS
+00001302                           499  
+00001302                           500  .MOVED
+00001302  0C79 01CF 00002202       501              CMP.W   #SCRHEIGH-1-TILEDIM/2, (PLAYERY)    ; BOTTOM BOUNDARY
+0000130A  6D00 0004                502              BLT     .RMVED
+0000130E  4E75                     503              RTS
+00001310                           504  .RMVED
+00001310  0679 0020 00002202       505              ADD.W   #TILEDIM, (PLAYERY)         ; MOVE DOWN
+00001318  4E75                     506              RTS
+0000131A                           507  
+0000131A                           508  PLAYERPLOT
+0000131A  48E7 F800                509              MOVEM.L D0-D4, -(A7)
+0000131E  103C 0050                510              MOVE.B  #80, D0                     ; SET PEN CALL
+00001322  223C 00CCE0EA            511              MOVE.L  #TILELIGH, D1               ; SET PEN COLOR
+00001328  4E4F                     512              TRAP    #15                         
+0000132A                           513              
+0000132A  5240                     514              ADDQ.W  #1, D0                      ; SET FILL CALL
+0000132C  223C 00CCE0EA            515              MOVE.L  #TILELIGH, D1               ; SET FILL COLOR
+00001332  4E4F                     516              TRAP    #15
+00001334                           517              
+00001334  3239 00002200            518              MOVE.W  (PLAYERX), D1               ; D1 = X CENTER
+0000133A  3439 00002202            519              MOVE.W  (PLAYERY), D2               ; D1 = Y CENTER
+00001340  3601                     520              MOVE.W  D1, D3
+00001342  3802                     521              MOVE.W  D2, D4
+00001344  0441 0010                522              SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
+00001348  0442 0010                523              SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
+0000134C  0644 0010                524              ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
+00001350  0643 0010                525              ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
+00001354                           526  
+00001354  303C 0057                527              MOVE.W  #87, D0
+00001358  4E4F                     528              TRAP    #15
+0000135A  4CDF 001F                529              MOVEM.L (A7)+,D0-D4
+0000135E  4E75                     530              RTS
+0000135E  4E75                     531  -------------------- end include --------------------
+00001360                           532              INCLUDE "MAP.X68"               ; MAP MANAGER
+00001360                           533  MAPINIT
+00001360  4E75                     534          RTS      
+00001362                           535  MAPUPDT
+00001362  4E75                     536          RTS
+00001364                           537  MAPPLOT
+00001364  48E7 F800                538          MOVEM.L D0-D4, -(A7)
+00001368                           539  
+00001368  103C 0050                540          MOVE.B  #80, D0                     ; SET PEN CALL
+0000136C  223C 00745B6D            541          MOVE.L  #TILEDARK, D1               ; SET PEN COLOR
+00001372  4E4F                     542          TRAP    #15                         
+00001374                           543              
+00001374  5240                     544          ADDQ.W  #1, D0                      ; SET FILL CALL
+00001376  223C 00745B6D            545          MOVE.L  #TILEDARK, D1               ; SET FILL COLOR
+0000137C  4E4F                     546          TRAP    #15
+0000137E                           547  
+0000137E  4241                     548          CLR     D1                          ; LEFT BORDER
+00001380  4242                     549          CLR     D2                      
+00001382  363C 004F                550          MOVE.W  #79, D3
+00001386  383C 01E0                551          MOVE.W  #SCRHEIGH, D4
+0000138A  303C 0057                552          MOVE.W  #87, D0
+0000138E  4E4F                     553          TRAP    #15
+00001390                           554  
+00001390  323C 0231                555          MOVE.W  #561, D1                    ; RIGHT BORDER                                
+00001394  363C 0280                556          MOVE.W  #SCRWIDTH, D3
+00001398  4E4F                     557          TRAP    #15
+0000139A                           558  
+0000139A  4240                     559          CLR     D0
+0000139C  4241                     560          CLR     D1
+0000139E                           561  
+0000139E  103C 0050                562          MOVE.B  #80, D0                     ; SET PEN CALL
+000013A2  223C 00A38099            563          MOVE.L  #TILEDETA, D1               ; SET PEN COLOR
+000013A8  4E4F                     564          TRAP    #15                         
+000013AA                           565              
+000013AA  5240                     566          ADDQ.W  #1, D0                      ; SET FILL CALL
+000013AC  223C 00A38099            567          MOVE.L  #TILEDETA, D1               ; SET FILL COLOR
+000013B2  4E4F                     568          TRAP    #15
+000013B4                           569  
+000013B4  323C 0091                570          MOVE.W  #145, D1                    ; FLOOR                      
+000013B8  363C 01EF                571          MOVE.W  #495, D3
+000013BC  4E4F                     572          TRAP    #15
+000013BE  4CDF 001F                573          MOVEM.L (A7)+,D0-D4
+000013C2                           574  
+000013C2  4E75                     575          RTS
+000013C2  4E75                     576  -------------------- end include --------------------
+000013C4                           577              INCLUDE "KEY.X68"               ; KEY MANAGER
+000013C4                           578  KEYINIT             ; RANDOM POSITION
+000013C4  2F00                     579              MOVE.L D0, -(A7)
+000013C6  4EB8 123A                580              JSR     RNGX
+000013CA  33C0 00002204            581              MOVE.W  D0, (KEYX)
+000013D0  4EB8 1258                582              JSR     RNGY
+000013D4  33C0 00002206            583              MOVE.W  D0, (KEYY)
+000013DA  201F                     584              MOVE.L  (A7)+, D0
+000013DC  4E75                     585              RTS
+000013DE                           586  KEYUPDT             ; NOTHING
+000013DE  48E7 8000                587              MOVEM.L D0, -(A7)
+000013E2  3039 00002204            588              MOVE.W  (KEYX), D0
+000013E8  B079 00002200            589              CMP.W   (PLAYERX), D0
+000013EE  6600 001A                590              BNE     .END
+000013F2  3039 00002206            591              MOVE.W  (KEYY), D0
+000013F8  B079 00002202            592              CMP.W   (PLAYERY), D0
+000013FE  6600 000A                593              BNE     .END
+00001402  13FC 0001 0000220C       594              MOVE.B  #1, (KEYOBTEINED)           ; THE PLAYER IS IN THE POSITION OF THE KEY
+0000140A                           595  .END
+0000140A  4CDF 0001                596              MOVEM.L (A7)+, D0
+0000140E  4E75                     597              RTS
+00001410                           598  
+00001410                           599  KEYPLOT             ; LIGHT BORDERED CIRCLE
+00001410  0C39 0001 0000220C       600              CMP.B   #1, (KEYOBTEINED)
+00001418  6700 003C                601              BEQ     .NOKEY
+0000141C  48E7 F800                602              MOVEM.L D0-D4, -(A7)
+00001420  103C 0050                603              MOVE.B  #80, D0                     ; SET PEN CALL
+00001424  223C 00CCE0EA            604              MOVE.L  #TILELIGH, D1               ; SET PEN COLOR
+0000142A  4E4F                     605              TRAP    #15                         
+0000142C                           606              
+0000142C  3239 00002204            607              MOVE.W  (KEYX), D1               ; D1 = X CENTER
+00001432  3439 00002206            608              MOVE.W  (KEYY), D2               ; D1 = Y CENTER
+00001438  3601                     609              MOVE.W  D1, D3
+0000143A  3802                     610              MOVE.W  D2, D4
+0000143C  0441 0010                611              SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
+00001440  0442 0010                612              SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
+00001444  0644 0010                613              ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
+00001448  0643 0010                614              ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
+0000144C                           615  
+0000144C  303C 005B                616              MOVE.W  #91, D0
+00001450  4E4F                     617              TRAP    #15
+00001452  4CDF 001F                618              MOVEM.L (A7)+,D0-D4
+00001456                           619  .NOKEY            
+00001456  4E75                     620              RTS
+00001456  4E75                     621  -------------------- end include --------------------
+00001458                           622              INCLUDE "STAIRS.X68"            ; STAIR MANAGER 
+00001458                           623  STAIRSINIT          ; RANDOM POSTION
+00001458  33FC 0120 00002208       624              MOVE.W #SCRWIDTH/2-32, (STAIRSX)       ; SET PLAYER TO CENTER
+00001460  33FC 00D0 0000220A       625              MOVE.W #SCRHEIGH/2-32, (STAIRSY)       ; SET PLAYER TO CENTER
+00001468  4E75                     626              RTS
+0000146A                           627  STAIRSUPDT          ; NOTHING
+0000146A  48E7 C000                628              MOVEM.L D0-D1, -(A7)
+0000146E  3039 00002208            629              MOVE.W  (STAIRSX), D0
+00001474  B079 00002200            630              CMP.W   (PLAYERX), D0
+0000147A  6600 004C                631              BNE     .END
+0000147E  3039 0000220A            632              MOVE.W  (STAIRSY), D0
+00001484  B079 00002202            633              CMP.W   (PLAYERY), D0
+0000148A  6600 003C                634              BNE     .END
+0000148E                           635              ; THE PLAYER IS IN THE POSITION OF THE STAIRS
+0000148E  0C39 0001 0000220C       636              CMP.B   #1, (KEYOBTEINED)
+00001496  6600 0016                637              BNE     .NOKEY
+0000149A  4EB8 13C4                638              JSR     KEYINIT
+0000149E  4EB8 1458                639              JSR     STAIRSINIT
+000014A2  13FC 0000 0000220C       640              MOVE.B  #0, (KEYOBTEINED)
+000014AA  6000 001C                641              BRA     .END
+000014AE                           642  .NOKEY      ; SAME POSITION NO KEY
+000014AE                           643  
+000014AE  303C 0051                644              MOVE.W  #81, D0                      ; SET FILL CALL
+000014B2  7200                     645              MOVE.L  #00000000, D1               ; SET FILL COLOR
+000014B4  4E4F                     646              TRAP    #15
+000014B6                           647  
+000014B6  43F8 11D6                648              LEA     NOKEYSTRING, A1
+000014BA  323C 00DC                649              MOVE.W  #SCRWIDTH/2-100, D1
+000014BE  343C 003C                650              MOVE.W  #SCRHEIGH/8, D2
+000014C2                           651  
+000014C2  303C 005F                652              MOVE.W #95, D0
+000014C6  4E4F                     653              TRAP    #15
+000014C8                           654  
+000014C8                           655  .END
+000014C8  4CDF 0003                656              MOVEM.L (A7)+, D0-D1
+000014CC  4E75                     657              RTS
+000014CE  4E75                     658              RTS
+000014D0                           659  STAIRSPLOT          ; LIGHT FILLED CIRCLE
+000014D0                           660             
+000014D0  48E7 F800                661              MOVEM.L D0-D4, -(A7)
+000014D4  103C 0050                662              MOVE.B  #80, D0                     ; SET PEN CALL
+000014D8  223C 00CCE0EA            663              MOVE.L  #TILELIGH, D1               ; SET PEN COLOR
+000014DE  4E4F                     664              TRAP    #15        
+000014E0                           665  
+000014E0  5240                     666              ADDQ.W  #1, D0                      ; SET FILL CALL
+000014E2  223C 00CCE0EA            667              MOVE.L  #TILELIGH, D1               ; SET FILL COLOR
+000014E8  4E4F                     668              TRAP    #15                 
+000014EA                           669              
+000014EA  3239 00002208            670              MOVE.W  (STAIRSX), D1               ; D1 = X CENTER
+000014F0  3439 0000220A            671              MOVE.W  (STAIRSY), D2               ; D1 = Y CENTER
+000014F6  3601                     672              MOVE.W  D1, D3
+000014F8  3802                     673              MOVE.W  D2, D4
+000014FA  0441 0010                674              SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
+000014FE  0442 0010                675              SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
+00001502  0644 0010                676              ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
+00001506  0643 0010                677              ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
+0000150A                           678              
+0000150A  0C39 0001 0000220C       679              CMP.B  #1, (KEYOBTEINED)
+00001512  6700 000E                680              BEQ     .KEYOBTEINED
+00001516  303C 0058                681              MOVE.W  #88, D0
+0000151A  4E4F                     682              TRAP    #15
+0000151C                           683  
+0000151C  4CDF 001F                684              MOVEM.L (A7)+,D0-D4
+00001520                           685  
+00001520  4E75                     686              RTS
+00001522                           687  .KEYOBTEINED
+00001522  303C 005B                688              MOVE.W  #91, D0
+00001526  4E4F                     689              TRAP    #15
+00001528                           690  
+00001528  4CDF 001F                691              MOVEM.L (A7)+,D0-D4
+0000152C  4E75                     692              RTS
+0000152E                           693  
+0000152E                           694  
+0000152E                           695  -------------------- end include --------------------
+0000152E                           696  
+0000152E                           697  ; --- INITIALIZE --------------------------------------------------------------
+0000152E                           698  
+0000152E  4EB8 1000                699  START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
+00001532                           700  
+00001532                           701              ; TO DO : ADD YOUR GAME INITIALIZATION HERE
+00001532  4EB8 122C                702              JSR     RNDINIT
+00001536  4EB8 1276                703              JSR     PLAYERINIT
+0000153A  4EB8 13C4                704              JSR     KEYINIT
+0000153E  4EB8 1458                705              JSR     STAIRSINIT
+00001542                           706  ; --- UPDATE ------------------------------------------------------------------
+00001542                           707  
+00001542  4E40                     708  .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
+00001544                           709  
+00001544                           710              ; TO DO : ADD YOUR GAME UPDATE HERE
+00001544                           711  
+00001544  4EB8 1288                712              JSR     PLAYERUPDT
+00001548  4EB8 13DE                713              JSR     KEYUPDT
+0000154C  4EB8 146A                714              JSR     STAIRSUPDT
+00001550                           715  ; --- WAIT SYNCH --------------------------------------------------------------
+00001550                           716  
+00001550  4A39 00001578            717  .WINT       TST.B   (SCRINTCT)              ; WAIT FOR INTERRUPT
+00001556  67F8                     718              BEQ     .WINT
+00001558  4239 00001578            719              CLR.B   (SCRINTCT)
+0000155E                           720  
+0000155E                           721  ; --- PLOT --------------------------------------------------------------------
+0000155E                           722  
+0000155E                           723              ; TO DO : ADD YOUR GAME PLOT HERE
+0000155E                           724              
+0000155E  4EB8 1364                725              JSR MAPPLOT
+00001562  4EB8 131A                726              JSR PLAYERPLOT
+00001566  4EB8 1410                727              JSR KEYPLOT
+0000156A  4EB8 14D0                728              JSR STAIRSPLOT
+0000156E                           729  
+0000156E  4E41                     730              TRAP    #SCRTRAP                ; SHOW GRAPHICS
+00001570  60D0                     731              BRA     .LOOP                   ; MAIN LOOP
+00001572  FFFF FFFF                732              SIMHALT
+00001576                           733  
+00001576                           734  ; --- VARIABLES ---------------------------------------------------------------
+00001576                           735  
+00001576                           736              INCLUDE "SYSVAR.X68"
+00001576                           737  ; =============================================================================
+00001576                           738  ; TITLE    : SYSTEM VARIABLES
+00001576                           739  ; AUTHOR   : ANTONI BURGUERA
+00001576                           740  ; COMMENTS : NOTE THAT ALL THESE VARS ARE USED TO SHARE DATA FROM SYSTEM TO
+00001576                           741  ;            USER. THUS THEY MUST NOT BE IN PROTECTED MEMORY.
+00001576                           742  ;            NOTE THAT USING DMMDATA IN SUCH WAY IS A BAD IDEA, AS USER
+00001576                           743  ;            APPLICATIONS CAN ALSO FREE OR CHANGE OWNERSHIP. NONETHELESS, FOR
+00001576                           744  ;            THE SAKE OF THIS EXAMPLE THIS IS GOOD ENOUGH.
+00001576                           745  ; HISTORY  : XX-XXX-201X - CREATION
+00001576                           746  ;            11-OCT-2020 - MINOR CHANGES
+00001576                           747  ; =============================================================================
+00001576                           748  
+00001576                           749  ; --- KEYBOARD RELATED VARIABLES ----------------------------------------------
+00001576                           750  
+00001576                           751  KBDVAL      DS.B    1                       ; KEY PRESSED=1
+00001577                           752  KBDEDGE     DS.B    1                       ; KEY CHANGED=1
+00001578                           753  
+00001578                           754              DS.W    0
+00001578                           755  
+00001578                           756  ; --- SCREEN RELATED VARIABLES ------------------------------------------------
+00001578                           757  
+00001578                           758  SCRINTCT    DS.B    1                       ; INTERRUPT COUNTER/FLAG
+00001579                           759  SCRCYCCT    DS.B    1                       ; CYCLE COUNTER
+0000157A                           760              DS.W    0
+0000157A                           761  
+0000157A                           762  ; --- DYNAMIC MEMORY VARIABLES ------------------------------------------------
+0000157A                           763  
+00001580                           764              ORG     (*+DMMBSIZE-1)&-DMMBSIZE ; ALIGN TO DMMBSIZE
+00001580                           765  DMMDATA     DS.B    DMMBSIZE*DMMBNUM        ; DYNAMIC MEMORY ALLOCATION SPACE
+00002200                           766              DS.W    0                       ; JUST IN CASE (SIZE IS POW OF TWO)
+00002200                           767  -------------------- end include --------------------
+00002200                           768              INCLUDE "VAR.X68"
+00002200                           769  ; =============================================================================
+00002200                           770  ; TITLE    : GAME VARIABLES
+00002200                           771  ; AUTHOR   :
+00002200                           772  ; HISTORY  :
+00002200                           773  ; =============================================================================
+00002200                           774  
+00002200                           775  ; PLAYER
+00002200                           776  PLAYERX     DS.W    1   ; PLAYER X COORDINATE
+00002202                           777  PLAYERY     DS.W    1   ; PLAYER Y COORDINATE
+00002204                           778  
+00002204                           779  KEYX        DS.W    1   ; KEY X COORDINATE
+00002206                           780  KEYY        DS.W    1   ; KEY Y COORDINATE
+00002208                           781  
+00002208                           782  STAIRSX     DS.W    1   ; STARIS X COORDINATE
+0000220A                           783  STAIRSY     DS.W    1   ; STAIRS X COORDINATE
+0000220C                           784  
+0000220C= 00                       785  KEYOBTEINED DC.B    0   ; "BOOLEAN" VALUE, SELF EXPLANATORY 
+0000220E                           786              DS.W    0
+0000220E                           787  
+0000220E                           788  NOKEYTIMER  DS.W    1
+00002210                           789  
+00002210                           790  RNGXINDEX   DS.W    1
+00002212                           791  RNGYINDEX   DS.W    1
+00002212                           792  -------------------- end include --------------------
+00002214                           793              END    START
 
 No errors detected
 No warnings generated
@@ -730,7 +809,7 @@ DMMALLOC            11A6
 DMMALLOC:END        11BE
 DMMBNUM             32
 DMMBSIZE            40
-DMMDATA             1500
+DMMDATA             1580
 DMMFCOM             1180
 DMMFFND             118E
 DMMFIRST            1136
@@ -762,7 +841,7 @@ KBDCHRSH            10
 KBDCHRSP            20
 KBDCHRUP            26
 KBDDOWN             28
-KBDEDGE             14E5
+KBDEDGE             1577
 KBDFIRE1            20
 KBDFIRE2            4D
 KBDFIRE3            10
@@ -783,55 +862,63 @@ KBDREAD:STORE       1106
 KBDRIGHT            27
 KBDTRAP             0
 KBDUP               26
-KBDVAL              14E4
-KEYINIT             133E
-KEYOBTEINED         218C
-KEYPLOT             1382
-KEYPLOT:NOKEY       13C8
-KEYUPDT             1350
-KEYUPDT:END         137C
-KEYX                2184
-KEYY                2186
-MAPINIT             12DA
-MAPPLOT             12DE
-MAPUPDT             12DC
+KBDVAL              1576
+KEYINIT             13C4
+KEYOBTEINED         220C
+KEYPLOT             1410
+KEYPLOT:NOKEY       1456
+KEYUPDT             13DE
+KEYUPDT:END         140A
+KEYX                2204
+KEYY                2206
+MAPINIT             1360
+MAPPLOT             1364
+MAPUPDT             1362
 NOKEYSTRING         11D6
-PLAYERINIT          11F0
-PLAYERPLOT          1294
-PLAYERUPDT          1202
-PLAYERUPDT:MOVED    127C
-PLAYERUPDT:MOVEL    1234
-PLAYERUPDT:MOVER    124C
-PLAYERUPDT:MOVEU    1264
-PLAYERUPDT:RMVED    128A
-PLAYERUPDT:RMVEL    1242
-PLAYERUPDT:RMVER    125A
-PLAYERUPDT:RMVEU    1272
-PLAYERX             2180
-PLAYERY             2182
-SCRCYCCT            14E7
+NOKEYTIMER          220E
+PLAYERINIT          1276
+PLAYERPLOT          131A
+PLAYERUPDT          1288
+PLAYERUPDT:MOVED    1302
+PLAYERUPDT:MOVEL    12BA
+PLAYERUPDT:MOVER    12D2
+PLAYERUPDT:MOVEU    12EA
+PLAYERUPDT:RMVED    1310
+PLAYERUPDT:RMVEL    12C8
+PLAYERUPDT:RMVER    12E0
+PLAYERUPDT:RMVEU    12F8
+PLAYERX             2200
+PLAYERY             2202
+RNDINIT             122C
+RNGX                123A
+RNGXINDEX           2210
+RNGY                1258
+RNGYINDEX           2212
+SCRCYCCT            1579
 SCRHEIGH            1E0
 SCRINIT             101C
-SCRINTCT            14E6
+SCRINTCT            1578
 SCRIRQ              1
 SCRISR              108C
 SCRTIM              50
 SCRTRAP             1
 SCRUPD              109A
 SCRWIDTH            280
-STAIRSINIT          13CA
-STAIRSPLOT          1442
-STAIRSPLOT:KEYOBTEINED  1494
-STAIRSUPDT          13DC
-STAIRSUPDT:END      143A
-STAIRSUPDT:NOKEY    1420
-STAIRSX             2188
-STAIRSY             218A
-START               14A0
-START:LOOP          14B0
-START:WINT          14BE
+STAIRSINIT          1458
+STAIRSPLOT          14D0
+STAIRSPLOT:KEYOBTEINED  1522
+STAIRSUPDT          146A
+STAIRSUPDT:END      14C8
+STAIRSUPDT:NOKEY    14AE
+STAIRSX             2208
+STAIRSY             220A
+START               152E
+START:LOOP          1542
+START:WINT          1550
 SYSINIT             1000
 TILEDARK            745B6D
 TILEDETA            A38099
 TILEDIM             20
 TILELIGH            CCE0EA
+XVALUES             11F0
+YVALUES             120E
