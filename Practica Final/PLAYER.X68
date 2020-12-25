@@ -21,7 +21,7 @@ PLAYERUPDT
             BNE     .MOVED
             RTS
 .MOVEL
-            CMP.W   #TILEDIM/2+(SCRWIDTH-SCRHEIGH), (PLAYERX)       ; LEFT BOUNDARY
+            CMP.W   #TILEDIM/2+(SCRWIDTH-SCRHEIGH)-64, (PLAYERX)       ; LEFT BOUNDARY
             BGT     .RMVEL
             RTS
 .RMVEL
@@ -29,7 +29,7 @@ PLAYERUPDT
             RTS
 
 .MOVER
-            CMP.W   #SCRHEIGH-1-TILEDIM/2, (PLAYERX)    ; RIGHT BOUNDARY
+            CMP.W   #SCRHEIGH-1-TILEDIM/2+64, (PLAYERX)    ; RIGHT BOUNDARY
             BLT     .RMVER
             RTS
 .RMVER

@@ -3,16 +3,35 @@ STAIRSINIT          ; RANDOM POSTION
             MOVE.W #SCRHEIGH/2-32, (STAIRSY)       ; SET PLAYER TO CENTER
             RTS
 STAIRSUPDT          ; NOTHING
-            MOVEM.L D0, -(A7)
+            MOVEM.L D0-D1, -(A7)
             MOVE.W  (STAIRSX), D0
             CMP.W   (PLAYERX), D0
             BNE     .END
             MOVE.W  (STAIRSY), D0
             CMP.W   (PLAYERY), D0
             BNE     .END
-                      ; THE PLAYER IS IN THE POSITION OF THE STAIRS
+            ; THE PLAYER IS IN THE POSITION OF THE STAIRS
+            CMP.B   #1, (KEYOBTEINED)
+            BNE     .NOKEY
+            JSR     KEYINIT
+            JSR     STAIRSINIT
+            MOVE.B  #0, (KEYOBTEINED)
+            BRA     .END
+.NOKEY      ; SAME POSITION NO KEY
+
+            MOVE.W  #81, D0                      ; SET FILL CALL
+            MOVE.L  #00000000, D1               ; SET FILL COLOR
+            TRAP    #15
+
+            LEA     NOKEYSTRING, A1
+            MOVE.W  #SCRWIDTH/2-100, D1
+            MOVE.W  #SCRHEIGH/8, D2
+
+            MOVE.W #95, D0
+            TRAP    #15
+
 .END
-            MOVEM.L (A7)+, D0
+            MOVEM.L (A7)+, D0-D1
             RTS
             RTS
 STAIRSPLOT          ; LIGHT FILLED CIRCLE
@@ -49,3 +68,5 @@ STAIRSPLOT          ; LIGHT FILLED CIRCLE
 
             MOVEM.L (A7)+,D0-D4
             RTS
+
+

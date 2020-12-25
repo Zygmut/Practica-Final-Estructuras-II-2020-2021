@@ -13,15 +13,15 @@ MAPPLOT
         MOVE.L  #TILEDARK, D1               ; SET FILL COLOR
         TRAP    #15
 
-        MOVE.W  #64, D1                     ; LEFT BORDER
+        CLR     D1                          ; LEFT BORDER
         CLR     D2                      
-        MOVE.W  #143, D3
+        MOVE.W  #79, D3
         MOVE.W  #SCRHEIGH, D4
         MOVE.W  #87, D0
         TRAP    #15
 
-        MOVE.W  #497, D1                    ; RIGHT BORDER                                
-        MOVE.W  #578, D3
+        MOVE.W  #561, D1                    ; RIGHT BORDER                                
+        MOVE.W  #SCRWIDTH, D3
         TRAP    #15
 
         CLR     D0
