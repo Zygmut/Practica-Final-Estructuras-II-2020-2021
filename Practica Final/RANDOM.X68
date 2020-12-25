@@ -34,7 +34,10 @@ RNGX
             ADD.W   D0, A0
             MOVE.W  (A0), D0
             ADDQ.B  #1, (RNGXINDEX)
-            
+            CMP     #14, (RNGXINDEX)
+            BNE     .NOVERFLOW     
+            CLR     (RNGXINDEX)
+.NOVERFLOW            
             MOVE.L  (A7)+, A0
             RTS
 
@@ -54,6 +57,10 @@ RNGY
             ADD.W   D0, A0
             MOVE.W  (A0), D0
             ADDQ.B  #1, (RNGYINDEX)
+            CMP     #14, (RNGYINDEX)
+            BNE     .NOVERFLOW
+            CLR     (RNGYINDEX)
+.NOVERFLOW
             MOVE.L  (A7)+, A0
             RTS
 

@@ -1,6 +1,10 @@
 STAIRSINIT          ; RANDOM POSTION
-            MOVE.W #SCRWIDTH/2-32, (STAIRSX)       ; SET PLAYER TO CENTER
-            MOVE.W #SCRHEIGH/2-32, (STAIRSY)       ; SET PLAYER TO CENTER
+            MOVE.L D0, -(A7)
+            JSR     RNGX
+            MOVE.W  D0, (STAIRSX)
+            JSR     RNGY
+            MOVE.W  D0, (STAIRSY)
+            MOVE.L  (A7)+, D0
             RTS
 STAIRSUPDT          ; NOTHING
             MOVEM.L D0-D1, -(A7)
