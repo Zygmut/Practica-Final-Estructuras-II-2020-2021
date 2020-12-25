@@ -31,6 +31,7 @@ RNDGET
             MOVE.L  (A7)+,A0
             RTS
 
+; UPDATE RANDOM VALUES TO HAVE ONLY CENTER VALUES OF THE "GRID"
 .RANDVEC    DC.B    162, 238, 154, 12 , 245, 36 , 32 , 103
             DC.B    42 , 163, 81 , 38 , 224, 172, 19 , 69
             DC.B    117, 81 , 202, 253, 51 , 235, 108, 154

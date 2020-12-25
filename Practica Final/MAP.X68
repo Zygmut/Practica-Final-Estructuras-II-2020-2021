@@ -15,12 +15,12 @@ MAPPLOT
 
         MOVE.W  #64, D1                     ; LEFT BORDER
         CLR     D2                      
-        MOVE.W  #144, D3
+        MOVE.W  #143, D3
         MOVE.W  #SCRHEIGH, D4
         MOVE.W  #87, D0
         TRAP    #15
 
-        MOVE.W  #496, D1                    ; RIGHT BORDER                                
+        MOVE.W  #497, D1                    ; RIGHT BORDER                                
         MOVE.W  #578, D3
         TRAP    #15
 

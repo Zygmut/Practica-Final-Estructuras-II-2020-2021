@@ -14,6 +14,8 @@
             INCLUDE "CONST.X68"             ; GAME CONSTANTS
             INCLUDE "PLAYER.X68"            ; PLAYER MANAGER
             INCLUDE "MAP.X68"               ; MAP MANAGER
+            INCLUDE "KEY.X68"               ; KEY MANAGER
+            INCLUDE "STAIRS.X68"            ; STAIR MANAGER 
 
 ; --- INITIALIZE --------------------------------------------------------------
 
@@ -21,7 +23,8 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
 
             ; TO DO : ADD YOUR GAME INITIALIZATION HERE
             JSR     PLAYERINIT
-
+            JSR     KEYINIT
+            JSR     STAIRSINIT
 ; --- UPDATE ------------------------------------------------------------------
 
 .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
@@ -29,6 +32,8 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             ; TO DO : ADD YOUR GAME UPDATE HERE
 
             JSR     PLAYERUPDT
+            JSR     KEYUPDT
+            JSR     STAIRSUPDT
 ; --- WAIT SYNCH --------------------------------------------------------------
 
 .WINT       TST.B   (SCRINTCT)              ; WAIT FOR INTERRUPT
@@ -41,6 +46,8 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             
             JSR MAPPLOT
             JSR PLAYERPLOT
+            JSR KEYPLOT
+            JSR STAIRSPLOT
 
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             BRA     .LOOP                   ; MAIN LOOP
