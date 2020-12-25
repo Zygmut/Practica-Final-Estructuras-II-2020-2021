@@ -73,7 +73,7 @@ KBDBITPS    EQU     7
 SCRWIDTH    EQU     640                     ; SCREEN WIDTH (PIXELS)
 SCRHEIGH    EQU     480                     ; SCREEN HEIGHT (PIXELS)
 SCRIRQ      EQU     1                       ; SCREEN INTERRUPT NUMBER
-SCRTIM      EQU     20                      ; SCREEN TIMER (MS)
+SCRTIM      EQU     80                      ; SCREEN TIMER (MS)
 
 ; --- DYNAMIC MEMORY CONSTANTS ------------------------------------------------
 
