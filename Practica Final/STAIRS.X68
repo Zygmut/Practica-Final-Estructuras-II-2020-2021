@@ -19,12 +19,14 @@ STAIRSUPDT          ; NOTHING
             BNE     .NOKEY
             JSR     KEYINIT
             JSR     STAIRSINIT
+            JSR     ENEMYINIT
             MOVE.B  #0, (KEYOBTEINED)
+            ADDQ.W  #1, (LEVEL)
             BRA     .END
 .NOKEY      ; SAME POSITION NO KEY
 
             MOVE.W  #81, D0                      ; SET FILL CALL
-            MOVE.L  #00000000, D1               ; SET FILL COLOR
+            MOVE.L  #0, D1               ; SET FILL COLOR
             TRAP    #15
 
             LEA     NOKEYSTRING, A1
@@ -37,7 +39,7 @@ STAIRSUPDT          ; NOTHING
 .END
             MOVEM.L (A7)+, D0-D1
             RTS
-            RTS
+            
 STAIRSPLOT          ; LIGHT FILLED CIRCLE
            
             MOVEM.L D0-D4, -(A7)

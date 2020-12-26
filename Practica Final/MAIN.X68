@@ -17,6 +17,7 @@
             INCLUDE "MAP.X68"               ; MAP MANAGER
             INCLUDE "KEY.X68"               ; KEY MANAGER
             INCLUDE "STAIRS.X68"            ; STAIR MANAGER 
+            INCLUDE "ENEMY.X68"             ; ENEMY MANAGER
 
 ; --- INITIALIZE --------------------------------------------------------------
 
@@ -27,6 +28,8 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             JSR     PLAYERINIT
             JSR     KEYINIT
             JSR     STAIRSINIT
+            JSR     ENEMYINIT
+            
 ; --- UPDATE ------------------------------------------------------------------
 
 .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
@@ -36,6 +39,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             JSR     PLAYERUPDT
             JSR     KEYUPDT
             JSR     STAIRSUPDT
+            JSR     ENEMYUPDT
 ; --- WAIT SYNCH --------------------------------------------------------------
 
 .WINT       TST.B   (SCRINTCT)              ; WAIT FOR INTERRUPT
@@ -46,10 +50,11 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
 
             ; TO DO : ADD YOUR GAME PLOT HERE
             
-            JSR MAPPLOT
-            JSR PLAYERPLOT
-            JSR KEYPLOT
-            JSR STAIRSPLOT
+            JSR     MAPPLOT
+            JSR     PLAYERPLOT
+            JSR     KEYPLOT
+            JSR     STAIRSPLOT
+            JSR     ENEMYPLOT
 
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             BRA     .LOOP                   ; MAIN LOOP
@@ -60,6 +65,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 *~Font name~Fixedsys~
