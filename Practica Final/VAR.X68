@@ -5,6 +5,7 @@
 ; =============================================================================
 
 ; PLAYER
+PLAYERL     DC.W    3   ; PLAYER LIVES
 PLAYERX     DS.W    1   ; PLAYER X COORDINATE
 PLAYERY     DS.W    1   ; PLAYER Y COORDINATE
 
@@ -25,4 +26,8 @@ RNGXINDEX   DS.W    1
 RNGYINDEX   DS.W    1 
 
 LEVEL       DC.W    0
+
+
+
+
 

@@ -35,7 +35,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
 .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
 
             ; TO DO : ADD YOUR GAME UPDATE HERE
-
+            
             JSR     PLAYERUPDT
             JSR     KEYUPDT
             JSR     STAIRSUPDT
@@ -49,7 +49,10 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
 ; --- PLOT --------------------------------------------------------------------
 
             ; TO DO : ADD YOUR GAME PLOT HERE
-            
+            CMP.W   #0, (PLAYERL)
+            BEQ     .DEATH
+
+            JSR     LIVEPLOT
             JSR     MAPPLOT
             JSR     PLAYERPLOT
             JSR     KEYPLOT
@@ -58,6 +61,39 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
 
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             BRA     .LOOP                   ; MAIN LOOP
+
+; --- DEATH -------------------------------------------------------------------
+.DEATH      ; PLAYER HAS 0 LIVES
+            ; -- BLACK SQUARE ---
+            MOVE.B  #80, D0                     ; SET PEN CALL
+            MOVE.L  #0, D1               ; SET PEN COLOR
+            TRAP    #15                         
+            
+            ADDQ.W  #1, D0                      ; SET FILL CALL
+            MOVE.L  #0, D1               ; SET FILL COLOR
+            TRAP    #15
+            
+            MOVE.W  #0, D1               ; D1 = X CENTER
+            MOVE.W  #0, D2               ; D1 = Y CENTER
+            MOVE.W  #SCRWIDTH, D3
+            MOVE.W  #SCRHEIGH, D4
+
+            MOVE.W  #87, D0
+            TRAP    #15
+
+            ; --- TEXT ---
+            MOVE.W  #81, D0                      ; SET FILL CALL
+            MOVE.L  #0, D1                       ; SET TEXT FILL COLOR
+            TRAP    #15
+
+            LEA     SUSSERTODST, A1
+            MOVE.W  #SCRWIDTH/2-230, D1             ; CENTER 
+            MOVE.W  #SCRHEIGH/2, D2             ; CENTER
+
+            MOVE.W  #95, D0
+            TRAP    #15
+
+            TRAP    #SCRTRAP                ; SHOW GRAPHICS
             SIMHALT
 
 ; --- VARIABLES ---------------------------------------------------------------
