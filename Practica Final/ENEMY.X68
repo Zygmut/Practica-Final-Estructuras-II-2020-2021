@@ -23,7 +23,8 @@ ENEMYINIT
             RTS
 
 ENEMYUPDT
-            MOVEM.L D0-D3/A1, -(A7)
+            MOVEM.L D0-D2/A1, -(A7)
+
             MOVE.W  (ENEMYX), D0
             CMP.W   (PLAYERX), D0
             BNE     .END
@@ -31,31 +32,16 @@ ENEMYUPDT
             CMP.W   (PLAYERY), D0
             BNE     .END
             ; THE PLAYER IS IN THE POSITION OF THE STAIRS
-            JSR     PLAYERINIT
-            SUBQ.W  #1, (PLAYERL)                ; -1 LIVES 
-            CMP     #0, (PLAYERL)
-            BEQ     .END
+            
             MOVE.W  #81, D0                      ; SET FILL CALL
             MOVE.L  #0, D1                       ; SET FILL COLOR
-            TRAP    #15
-
-            ; PLAYER UNABLE TO MOVE FOR SOME TIME
+            TRAP    #15   
             
-            MOVE.W  #SOULTIME, D3
-            SUBQ.W  #1, D3
-.LOOP
-            LEA     DEATHSTRING, A1
-            MOVE.W  #SCRWIDTH/2-130, D1
-            MOVE.W  #SCRHEIGH/8, D2
-
-            MOVE.W  #95, D0
-            TRAP    #15
-            TRAP    #SCRTRAP                    ; SHOW GRAPHICS
-            DBRA D3, .LOOP
+            JSR     DEATH
+            
 .END
-            MOVEM.L (A7)+, D0-D3/A1
+            MOVEM.L (A7)+, D0-D2/A1
             RTS
-
 ENEMYPLOT
             MOVEM.L D0-D4, -(A7)
             MOVE.B  #80, D0                     ; SET PEN CALL

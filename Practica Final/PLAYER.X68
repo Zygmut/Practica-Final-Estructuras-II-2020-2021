@@ -76,42 +76,6 @@ PLAYERPLOT
             MOVEM.L (A7)+,D0-D4
             RTS
 
-LIVEPLOT    ; PLOTS PLAYER LIVES WITH SQUARES ON RIGHT BOTTOM
-
-            MOVEM.L D0-D6, -(A7)
-            MOVE.B  #80, D0                     ; SET PEN CALL
-            MOVE.L  #TILEDARK, D1               ; SET PEN COLOR
-            TRAP    #15                         
-            
-            ADDQ.W  #1, D0                      ; SET FILL CALL
-            MOVE.L  #TILEDARK, D1               ; SET FILL COLOR
-            TRAP    #15
-        
-            MOVE.W (PLAYERL), D5
-            SUBQ.W #1, D5
-
-            MOVE.W  #581, D1                    ; LIVE COLUMN
-            MOVE.W  #621, D3                    ; LIVE COLUMN
-            
-.LOOP       ; BY SOME STUPID WAY, THIS THING DOESN'T WANT TO WORK WITH CLEANER COMMANDS. TOO BAD!
-            MOVE.W D5, D6
-            MULU.W #60, D6
-            SUB.W  #SCRHEIGH, D6
-            MOVE.W D6, D2
-            
-
-            MOVE.W D5, D6
-            MULU.W #60, D6
-            SUB.W  #SCRHEIGH, D6
-            MOVE.W D6, D2
-
-            MOVE.W  #87, D0                     ; DRAW A SQUARE
-            TRAP    #15
-            DBRA D5, .LOOP
-            
-            MOVEM.L (A7)+,D0-D6
-            RTS
-
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~
