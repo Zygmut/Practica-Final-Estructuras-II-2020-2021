@@ -55,13 +55,36 @@ PLAYERUPDT
 PLAYERPLOT
             MOVEM.L D0-D4, -(A7)
             UTILPEN #TILELIGH                         
-            
+
             UTILFILL #TILELIGH
             
             UTILTILE #87, (PLAYERX), (PLAYERY)
             MOVEM.L (A7)+,D0-D4
             RTS
 
+DEATH      ; PLAYER HAS 0 LIVES
+
+            ; -- BLACK SQUARE ---
+        UTILPEN #0                       
+        UTILFILL #0
+
+        MOVE.W  #0, D1               ; D1 = X CENTER
+        MOVE.W  #0, D2               ; D1 = Y CENTER
+        MOVE.W  #SCRWIDTH, D3
+        MOVE.W  #SCRHEIGH, D4
+
+        MOVE.W  #87, D0
+        TRAP    #15
+
+        ; --- TEXT ---
+        UTILFILL #0
+
+        UTILTEXT DEATHSTRING, #SCRWIDTH/2-230, #SCRHEIGH/3
+
+        UTILTEXT SUSSERTOD, #SCRWIDTH/2-230, #SCRHEIGH/2
+
+        TRAP    #SCRTRAP                ; SHOW GRAPHICS
+        JSR     LOOSE
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~

@@ -25,7 +25,7 @@ UTILTEXT    MACRO
 ;        \2 TEXT X
 ;        \3 TEXT Y
 ;   OUT: NONE
-;   MOD: D0, D1, D2, A1
+;   MOD: D0-D2 / A1
 ;   DES: PRINTS THE 0 TERINATED STRING IN \1 IN COORDINATES \2 \3
 
         LEA     \1, A1
@@ -42,7 +42,7 @@ UTILTILE    MACRO
 ;        \3 Y COORDINATE
 ;   OUT: NONE
 ;   MOD: D1-D4
-;   DES: DRAWS 
+;   DES: DRAWS A GRAPHIC AT \2 \3
         MOVE.W  \2, D1               ; D1 = X CENTER
         MOVE.W  \3, D2               ; D1 = Y CENTER
         MOVE.W  D1, D3
@@ -57,32 +57,33 @@ UTILTILE    MACRO
         ENDM
 
 UTILCOLL    
-;   IN:  D0.W X0 COORDINATE
-;        D1.W Y0 COORDINATE
-;        D2.W X1 COORDINATE
-;        D3.W Y1 COORDINATE
-;   OUT: D0.B = FF IF COLLISION, 00 ELSEWISE
-;   MOD: NONE
+;   IN:  D0 X0 COORDINATE
+;        D1 Y0 COORDINATE
+;   OUT: D2.B = FF IF COLLISION, 00 ELSEWISE
+;   MOD: D2
 ;   DES: CHECKS IF ELEMENTS 0 AND 1 HAVE THE SAME POSITION 
 
-        MOVEM.W D4-D7,-(A7)
-        ADD.W   D0,D4
-        CMP.W   D2,D4
-        BLE     .NOCOL
-        ADD.W   D2,D5
-        CMP.W   D0,D5
-        BLE     .NOCOL
-        ADD.W   D1,D6
-        CMP.W   D3,D6
-        BLE     .NOCOL
-        ADD.W   D3,D7
-        CMP.W   D1,D7
-        BLE     .NOCOL
-        MOVE.B  #$FF,D0
-        BRA     .END
-.NOCOL  CLR.B   D0
-.END    MOVEM.W (A7)+,D4-D7
+        CLR     D2
+        CMP.W   (PLAYERX), D0   ; COMPARE X COORDINATES
+        BNE .NOCOL
+        CMP.W   (PLAYERY), D1   ; COMPARE Y COORDINATES
+        BNE .NOCOL
+        MOVE.B  #$FF, D2
+.NOCOL
         RTS
         
+LVLPLOT
+        MOVEM.L D0-D2/A1, -(A7)
+        
+        UTILFILL #TILEDARK      
+
+        LEA     LEVELSTRING, A1
+        CLR.L   D1
+        MOVE.W  (LEVEL), D1
+        MOVE.B  #17,D0
+        TRAP    #15
+        
+        MOVEM.L (A7)+, D0-D2/A1
+        RTS 
 
     

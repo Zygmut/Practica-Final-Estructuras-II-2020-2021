@@ -6,14 +6,14 @@ STAIRSINIT          ; RANDOM POSTION
             MOVE.W  D0, (STAIRSY)
             MOVE.L  (A7)+, D0
             RTS
-STAIRSUPDT          ; NOTHING
-            MOVEM.L D0-D1, -(A7)
+STAIRSUPDT          
+            MOVEM.L D0-D2/A1, -(A7)
             MOVE.W  (STAIRSX), D0
-            CMP.W   (PLAYERX), D0
+            MOVE.W  (STAIRSY), D1
+            JSR     UTILCOLL
+            CMP.B   #$FF, D2
             BNE     .END
-            MOVE.W  (STAIRSY), D0
-            CMP.W   (PLAYERY), D0
-            BNE     .END
+            
             ; THE PLAYER IS IN THE POSITION OF THE STAIRS
             CMP.B   #1, (KEYOBTEINED)
             BNE     .NOKEY
@@ -32,11 +32,10 @@ STAIRSUPDT          ; NOTHING
             UTILTEXT NOKEYSTRING, #SCRWIDTH/2-100, #SCRHEIGH/8  
             
 .END
-            MOVEM.L (A7)+, D0-D1
+            MOVEM.L (A7)+, D0-D2/A1
             RTS
             
-STAIRSPLOT          ; LIGHT FILLED CIRCLE
-           
+STAIRSPLOT          
             MOVEM.L D0-D4, -(A7)
                     
             UTILPEN #TILELIGH

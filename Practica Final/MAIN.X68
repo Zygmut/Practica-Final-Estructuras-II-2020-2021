@@ -19,7 +19,6 @@
             INCLUDE "KEY.X68"               ; KEY MANAGER
             INCLUDE "STAIRS.X68"            ; STAIR MANAGER 
             INCLUDE "ENEMY.X68"             ; ENEMY MANAGER
-            INCLUDE "LIFE.X68"              ; LIFE MANAGER
             
 
 ; --- INITIALIZE --------------------------------------------------------------
@@ -32,7 +31,6 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             JSR     KEYINIT
             JSR     STAIRSINIT
             JSR     ENEMYINIT
-            JSR     LIFEINIT
             
 ; --- UPDATE ------------------------------------------------------------------
 
@@ -44,7 +42,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             JSR     KEYUPDT
             JSR     STAIRSUPDT
             JSR     ENEMYUPDT
-            JSR     LIFEUPDT
+            
 ; --- WAIT SYNCH --------------------------------------------------------------
 
 .WINT       TST.B   (SCRINTCT)              ; WAIT FOR INTERRUPT
@@ -60,7 +58,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
             JSR     KEYPLOT
             JSR     STAIRSPLOT
             JSR     ENEMYPLOT
-            
+            JSR     LVLPLOT
 
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             BRA     .LOOP                   ; MAIN LOOP
