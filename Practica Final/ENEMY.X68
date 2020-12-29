@@ -31,11 +31,7 @@ ENEMYUPDT
             MOVE.W  (ENEMYY), D0
             CMP.W   (PLAYERY), D0
             BNE     .END
-            ; THE PLAYER IS IN THE POSITION OF THE STAIRS
-            
-            MOVE.W  #81, D0                      ; SET FILL CALL
-            MOVE.L  #0, D1                       ; SET FILL COLOR
-            TRAP    #15   
+            ; THE PLAYER IS IN THE POSITION OF THE STAIRS  
             
             JSR     DEATH
             
@@ -44,24 +40,12 @@ ENEMYUPDT
             RTS
 ENEMYPLOT
             MOVEM.L D0-D4, -(A7)
-            MOVE.B  #80, D0                     ; SET PEN CALL
-            MOVE.L  #TILEDETA, D1               ; SET PEN COLOR
-            TRAP    #15                         
-            
-            ADDQ.W  #1, D0                      ; SET FILL CALL
-            MOVE.L  #TILEDETA, D1               ; SET FILL COLOR
-            TRAP    #15
-            
-            MOVE.W  (ENEMYX), D1               ; D1 = X CENTER
-            MOVE.W  (ENEMYY), D2               ; D1 = Y CENTER
-            MOVE.W  D1, D3
-            MOVE.W  D2, D4
-            SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
-            SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
-            ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
-            ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
 
-            MOVE.W  #87, D0
-            TRAP    #15
+            UTILPEN #TILEDETA                       
+            
+            UTILFILL #TILEDETA
+            
+            UTILTILE #87, (ENEMYX), (ENEMYY)
+            
             MOVEM.L (A7)+,D0-D4
             RTS

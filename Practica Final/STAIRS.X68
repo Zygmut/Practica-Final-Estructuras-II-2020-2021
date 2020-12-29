@@ -26,16 +26,11 @@ STAIRSUPDT          ; NOTHING
 .NOKEY      ; SAME POSITION NO KEY
 
             MOVE.W  #81, D0                      ; SET FILL CALL
-            MOVE.L  #0, D1               ; SET FILL COLOR
+            MOVE.L  #0, D1                       ; SET FILL COLOR
             TRAP    #15
 
-            LEA     NOKEYSTRING, A1
-            MOVE.W  #SCRWIDTH/2-100, D1
-            MOVE.W  #SCRHEIGH/8, D2
-
-            MOVE.W #95, D0
-            TRAP    #15
-
+            UTILTEXT NOKEYSTRING, #SCRWIDTH/2-100, #SCRHEIGH/8  
+            
 .END
             MOVEM.L (A7)+, D0-D1
             RTS
@@ -43,35 +38,18 @@ STAIRSUPDT          ; NOTHING
 STAIRSPLOT          ; LIGHT FILLED CIRCLE
            
             MOVEM.L D0-D4, -(A7)
-            MOVE.B  #80, D0                     ; SET PEN CALL
-            MOVE.L  #TILELIGH, D1               ; SET PEN COLOR
-            TRAP    #15        
-
-            ADDQ.W  #1, D0                      ; SET FILL CALL
-            MOVE.L  #TILELIGH, D1               ; SET FILL COLOR
-            TRAP    #15                 
-            
-            MOVE.W  (STAIRSX), D1               ; D1 = X CENTER
-            MOVE.W  (STAIRSY), D2               ; D1 = Y CENTER
-            MOVE.W  D1, D3
-            MOVE.W  D2, D4
-            SUB.W   #TILEDIM/2, D1              ; SET TOP LEFT CORNER
-            SUB.W   #TILEDIM/2, D2              ; SET TOP LEFT CORNER 
-            ADD.W   #TILEDIM/2, D4              ; SET LOW RIGHT CORNER
-            ADD.W   #TILEDIM/2, D3              ; SET LOW RIGHT CORNER
-            
-            CMP.B  #1, (KEYOBTEINED)
+                    
+            UTILPEN #TILELIGH
+            UTILFILL #TILELIGH 
+                            
+            CMP.B   #1, (KEYOBTEINED)
             BEQ     .KEYOBTEINED
-            MOVE.W  #88, D0
-            TRAP    #15
-
-            MOVEM.L (A7)+,D0-D4
-
-            RTS
+            UTILTILE #88, (STAIRSX), (STAIRSY)
+            BRA     .END
 .KEYOBTEINED
-            MOVE.W  #91, D0
-            TRAP    #15
+            UTILTILE #91, (STAIRSX), (STAIRSY)
 
+.END
             MOVEM.L (A7)+,D0-D4
             RTS
 

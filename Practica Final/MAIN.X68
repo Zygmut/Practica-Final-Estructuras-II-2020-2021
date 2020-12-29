@@ -4,7 +4,7 @@
 ; HISTORY  : 10-OCT-2020 - CREATION
 ;            11-OCT-2020 - MINOR CHANGES
 ; =============================================================================
-
+            OPT     MEX
             ORG     $1000
 
 ; --- CODE INCLUDES -----------------------------------------------------------
@@ -12,6 +12,7 @@
             INCLUDE "SYSCONST.X68"          ; SYSTEM CONSTANTS
             INCLUDE "SYSTEM.X68"            ; SYSTEM CODE
             INCLUDE "CONST.X68"             ; GAME CONSTANTS
+            INCLUDE "UTIL.X68"              ; UTILITY MANAGER
             INCLUDE "RANDOM.X68"            ; PSEUDO - RANDOM GENERATOR
             INCLUDE "PLAYER.X68"            ; PLAYER MANAGER
             INCLUDE "MAP.X68"               ; MAP MANAGER
@@ -19,6 +20,7 @@
             INCLUDE "STAIRS.X68"            ; STAIR MANAGER 
             INCLUDE "ENEMY.X68"             ; ENEMY MANAGER
             INCLUDE "LIFE.X68"              ; LIFE MANAGER
+            
 
 ; --- INITIALIZE --------------------------------------------------------------
 
@@ -72,6 +74,7 @@ LOOSE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 
