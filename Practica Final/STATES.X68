@@ -71,3 +71,27 @@ STAEMPTY
 ; NOTE     - JUST A PLACEHOLDER. NOTHING TO DO.
 ; -----------------------------------------------------------------------------
             RTS
+
+STATEGIN
+            
+            JSR     RNDINIT
+            JSR     PLAYERINIT
+            JSR     KEYINIT
+            JMP     STAIRSINIT
+            RTS
+
+STATEGUP
+            JSR     PLAYERUPDT
+            JSR     KEYUPDT
+            JSR     STAIRSUPDT
+            JMP     AGLUPDT
+
+            RTS
+STATEGPL
+            JSR     MAPPLOT
+            JSR     PLAYERPLOT
+            JSR     KEYPLOT
+            JSR     STAIRSPLOT
+            JSR     MISCPLOT
+            JMP     AGLPLOT
+            RTS

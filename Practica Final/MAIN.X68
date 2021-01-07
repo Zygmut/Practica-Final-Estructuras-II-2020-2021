@@ -14,34 +14,27 @@
             INCLUDE "CONST.X68"             ; GAME CONSTANTS
             INCLUDE "UTIL.X68"              ; UTILITY MANAGER
             INCLUDE "RANDOM.X68"            ; PSEUDO - RANDOM GENERATOR
+            INCLUDE "AGENTLST.X68"          ; AGENT MANAGER
             INCLUDE "PLAYER.X68"            ; PLAYER MANAGER
             INCLUDE "MAP.X68"               ; MAP MANAGER
             INCLUDE "KEY.X68"               ; KEY MANAGER
             INCLUDE "STAIRS.X68"            ; STAIR MANAGER 
             INCLUDE "ENEMY.X68"             ; ENEMY MANAGER
+            INCLUDE "MISC.X68"              ; MISCELLANEOUS MANAGER
+            INCLUDE "STATES.X68"            ; STATES MANAGER
             
 
 ; --- INITIALIZE --------------------------------------------------------------
 
-START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
-
-            ; TO DO : ADD YOUR GAME INITIALIZATION HERE
-            JSR     RNDINIT
-            JSR     PLAYERINIT
-            JSR     KEYINIT
-            JSR     STAIRSINIT
-            JSR     ENEMYINIT
+START                       ; INITIALIZE SYSTEM-RELATED STUFF
+            JSR     SYSINIT 
+            JSR     STATEGIN
             
 ; --- UPDATE ------------------------------------------------------------------
 
 .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
 
-            ; TO DO : ADD YOUR GAME UPDATE HERE
-            
-            JSR     PLAYERUPDT
-            JSR     KEYUPDT
-            JSR     STAIRSUPDT
-            JSR     ENEMYUPDT
+            JSR     STATEGUP
             
 ; --- WAIT SYNCH --------------------------------------------------------------
 
@@ -51,14 +44,7 @@ START       JSR     SYSINIT                 ; INITIALIZE SYSTEM-RELATED STUFF
 
 ; --- PLOT --------------------------------------------------------------------
 
-            ; TO DO : ADD YOUR GAME PLOT HERE
-            
-            JSR     MAPPLOT
-            JSR     PLAYERPLOT
-            JSR     KEYPLOT
-            JSR     STAIRSPLOT
-            JSR     ENEMYPLOT
-            JSR     LVLPLOT
+            JSR     STATEGPL
 
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             BRA     .LOOP                   ; MAIN LOOP

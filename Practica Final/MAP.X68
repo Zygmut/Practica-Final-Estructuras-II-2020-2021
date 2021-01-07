@@ -5,13 +5,10 @@ MAPUPDT
 MAPPLOT
         MOVEM.L D0-D4, -(A7)
 
-        MOVE.B  #80, D0                     ; SET PEN CALL
-        MOVE.L  #TILEDARK, D1               ; SET PEN COLOR
-        TRAP    #15                         
-            
-        ADDQ.W  #1, D0                      ; SET FILL CALL
-        MOVE.L  #TILEDARK, D1               ; SET FILL COLOR
-        TRAP    #15
+        
+        
+        UTILPEN #TILEDARK
+        UTILFILL #TILEDARK
 
         CLR     D1                          ; LEFT BORDER
         CLR     D2                      
@@ -27,17 +24,9 @@ MAPPLOT
         CLR     D0
         CLR     D1
 
-        MOVE.B  #80, D0                     ; SET PEN CALL
-        MOVE.L  #TILEDETA, D1               ; SET PEN COLOR
-        TRAP    #15                         
-            
-        ADDQ.W  #1, D0                      ; SET FILL CALL
-        MOVE.L  #TILEDETA, D1               ; SET FILL COLOR
-        TRAP    #15
+        UTILPEN #TILEDETA
+        UTILFILL #TILEDETA
 
-        MOVE.W  #145, D1                    ; FLOOR                      
-        MOVE.W  #495, D3
-        TRAP    #15
         MOVEM.L (A7)+,D0-D4
 
         RTS

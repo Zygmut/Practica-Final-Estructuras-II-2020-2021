@@ -7,7 +7,7 @@ STAIRSINIT          ; RANDOM POSTION
             MOVE.L  (A7)+, D0
             RTS
 STAIRSUPDT          
-            MOVEM.L D0-D2/A1, -(A7)
+            MOVEM.L D0-D2/A1-A3, -(A7)
             MOVE.W  (STAIRSX), D0
             MOVE.W  (STAIRSY), D1
             JSR     UTILCOLL
@@ -16,10 +16,26 @@ STAIRSUPDT
             
             ; THE PLAYER IS IN THE POSITION OF THE STAIRS
             CMP.B   #1, (KEYOBTEINED)
-            BNE     .NOKEY
+           ;  BNE     .NOKEY
             JSR     KEYINIT
             JSR     STAIRSINIT
-            JSR     ENEMYINIT
+            ;JSR     ENEMYINIT
+
+; CREATE ENEMIES BASED ON LEVEL 
+            CLR.L   D0
+            MOVE.W  #ENEMYID, D0
+            JSR     AGLFKIL         
+            MOVE.W (LEVEL), D1
+            
+.ENEMYADD
+            LEA     ENEMYINIT, A1
+            LEA     ENEMYUPDT, A2
+            LEA     ENEMYPLOT, A3
+            MOVE.W  #ENEMYID, D0
+            
+            JSR     AGLADD
+            DBRA.W    D1, .ENEMYADD
+
             MOVE.B  #0, (KEYOBTEINED)
             ADDQ.W  #1, (LEVEL)
             BRA     .END
@@ -32,7 +48,7 @@ STAIRSUPDT
             UTILTEXT NOKEYSTRING, #SCRWIDTH/2-100, #SCRHEIGH/8  
             
 .END
-            MOVEM.L (A7)+, D0-D2/A1
+            MOVEM.L (A7)+, D0-D2/A1-A3
             RTS
             
 STAIRSPLOT          

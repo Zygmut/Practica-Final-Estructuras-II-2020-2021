@@ -33,7 +33,7 @@ AGLADD
             RTS
 
 ; -----------------------------------------------------------------------------
-AGLUPD
+AGLUPDT
 ; UPDATES THE AGENT LIST. PRIOR TO CALLING THE UPDATE FUNCTIONS, A0 IS SET
 ; TO THE DATA BLOCK OF THE CORRESPONDING SLOT.
 ; INPUT    - NONE
@@ -80,3 +80,16 @@ AGLKILL     EQU     DMMFREE
 ; MODIFIES - NONE
 ; NOTE     - IT IS JUST A WRAPPER FOR DMMFREE
 ; -----------------------------------------------------------------------------
+
+AGLFKIL
+; KILLS ALL AGENTS WITH ID 'X'
+; INPUT    - D0 AGENT ID
+            MOVEM.L A0-A1,-(A7)
+            JSR     DMMFRSTO
+.LOOP       CMP.L   #0, A0
+            BEQ     .END            ; AGENT LIST IS EMPTY
+            JSR     AGLKILL
+            JSR     DMMFRSTO        ; SEARCH NEXT AGENT WITH ID D0
+            BRA     .LOOP
+.END        MOVEM.L (A7)+,A0-A1
+            RTS

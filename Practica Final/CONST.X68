@@ -3,34 +3,54 @@
 ; AUTHOR   :
 ; HISTORY  :
 ; =============================================================================
-;   TILE
 
+; TILE RELATED CONSTANTS 
 TILEDIM     EQU     32         ; TILE SET DIMENSIONS && PLAYER SPEED
-
 TILEDARK    EQU     $00745B6D  ; TILE SET DARK COLOR 
 TILELIGH    EQU     $00CCE0EA  ; TILE SET LIGHT COLOR
 TILEDETA    EQU     $00A38099  ; TILE SET DETAIL COLOR
 
+; STRINGS 
 NOKEYSTRING DC.W    'YOU DO NOT HAVE ANY KEYS', 0
-
 DEATHSTRING DC.W    'SOME PART OF YOUR SOUL FADES AWAY', 0
-
 SUSSERTOD	DC.W	'YOU HAD SO MUCH TO LIVE FOR, YET YOU WENT DOWN THE DUNGEON', 0
-
 LEVELSTRING	DC.W	' LEVEL: ', 0
 
-ENEMYMAXCNT EQU		50
+ENEMYMAXCNT EQU		12	
 
-XVALUES		DC.W	$80, $1E0, $200, $1A0, $C0, $A0, $180, $E0, $60, $100
-			DC.W	$220, $120, $1C0, $140, $160, $80, $A0, $1E0, $180, $140 
-            DC.W    $100, $E0, $1A0, $160, $220, $200, $C0, $60, $1C0, $120    
-			DC.W    $140, $160, $60, $100, $E0, $120, $1E0, $1A0, $A0, $1C0
-            DC.W    $220, $C0, $80, $200, $180, $100, $80, $220, $1C0, $1E0
-			DC.W    $E0, $120, $60, $160, $200, $C0, $140, $A0, $180, $1A0   
+; ID'S FOR AGENTS AND MATRIX IN CASE TORCH SHADER IS IMPLEMENTED
+EMPTYID		EQU		1			; VOID IDENTIFIER
+WALLID		EQU		2			; WALL IDENTIFIER
+FLOORID		EQU		3			; FLOOR IDENTIFIER | ONLY USEFUL IF TILE SET IS IMPLEMENTED
+STAIRID		EQU		4			; STAIR IDENTIFIER
+KEYID		EQU		5			; KEY IDENTIFIER
+PLYRID		EQU		6			; PLAYER IDENTIFIER
+ENEMYID		EQU		7			; TRAP IDENTIFIER
 
-YVALUES		DC.W	$B0, $150, $30, $10, $F0, $70, $90, $50, $D0, $190
-			DC.W	$1D0, $130, $170, $1B0, $110, $170, $F0, $110, $10
-            DC.W    $50, $70, $150, $1D0, $130, $D0, $30, $90, $190, $B0
-			DC.W    $D0, $130, $90, $70, $150, $10, $1B0, $50, $30, $B0
-            DC.W    $110, $170, $F0, $190, $1D0, $1B0, $130, $190, $10, $1B0
-			DC.W    $B0, $D0, $110, $50, $F0, $1D0, $170, $150, $90, $30
+; PSEUDO-RANDOM GENERATOR VECTORS
+XVALUES		DC.W	$100, $220, $180, $1C0, $80, $C0, $200, $E0, $160, $120
+			DC.W	$60, $1E0, $A0, $1A0, $140
+
+YVALUES		DC.W	$D0, $90, $B0, $F0, $B0, $90, $190, $110, $170, $190
+			DC.W	$B0, $1B0, $B0, $130, $D0, $50, $170, $190, $130, $110
+			DC.W	$1B0, $150, $90, $90, $110, $30, $70, $150, $90, $10
+			DC.W	$1B0, $F0, $D0, $D0, $90, $1B0, $B0, $170, $130, $190
+			DC.W	$F0, $30, $150, $50, $170, $110, $1B0, $170, $150, $150
+			DC.W	$70, $1B0, $30, $F0, $10, $90, $F0, $70, $D0, $170
+			DC.W	$50, $B0, $D0, $190, $90, $170, $50, $50, $50, $90
+			DC.W	$90, $1B0, $30, $110, $130, $50, $B0, $110, $F0, $70
+			DC.W	$10, $1B0, $110, $50, $D0, $F0, $F0, $30, $30, $150
+			DC.W	$B0, $30, $110, $110, $1B0, $190, $30, $30, $170, $170
+			DC.W	$30, $190, $130, $90, $50, $90, $110, $150, $190, $110
+			DC.W	$50, $110, $F0, $190, $1B0, $170, $70, $1B0, $F0, $1B0
+			DC.W	$50, $130, $150, $130, $70, $30, $D0, $150, $50, $130
+			DC.W	$B0, $10, $10, $30, $90, $F0, $B0, $70, $B0, $70
+			DC.W	$70, $B0, $10, $130, $70, $70, $150, $B0, $130, $1B0
+			DC.W	$30, $190, $130, $D0, $10, $1D0, $150, $110, $F0, $10
+			DC.W	$190, $70, $130, $F0, $10, $70, $10, $30, $190, $D0
+			DC.W	$170, $150, $10, $50, $170, $D0, $F0, $B0, $B0, $D0
+			DC.W	$190, $90, $B0, $90, $190, $10, $110, $90, $110, $130
+			DC.W	$10, $50, $D0, $50, $1B0, $170, $F0, $150, $F0, $10
+			DC.W	$150, $70, $170, $110, $D0, $50, $1B0, $30, $150, $170
+			DC.W	$130, $30, $70, $190, $130, $30, $150, $130, $190, $10
+			DC.W	$10, $D0, $70, $D0, $B0
