@@ -11,6 +11,9 @@ PLAYERINIT
             RTS
 
 PLAYERUPDT  
+
+            BTST.B  #0, (SCRCYCCT)
+            BNE     .END  
             BTST.B  #KBDBITLF, (KBDVAL)         ; LEFT KEY PRESSED
             BNE     .MOVEL
             BTST.B  #KBDBITRT, (KBDVAL)         ; RIGHT KEY PRESSED
@@ -50,6 +53,7 @@ PLAYERUPDT
             RTS
 .RMVED
             ADD.W   #TILEDIM, (PLAYERY)         ; MOVE DOWN
+.END
             RTS
 
 PLAYERPLOT
@@ -62,29 +66,7 @@ PLAYERPLOT
             MOVEM.L (A7)+,D0-D4
             RTS
 
-DEATH      ; PLAYER HAS 0 LIVES
 
-            ; -- BLACK SQUARE ---
-        UTILPEN #0                       
-        UTILFILL #0
-
-        MOVE.W  #0, D1               ; D1 = X CENTER
-        MOVE.W  #0, D2               ; D1 = Y CENTER
-        MOVE.W  #SCRWIDTH, D3
-        MOVE.W  #SCRHEIGH, D4
-
-        MOVE.W  #87, D0
-        TRAP    #15
-
-        ; --- TEXT ---
-        UTILFILL #0
-
-        UTILTEXT DEATHSTRING, #SCRWIDTH/2-230, #SCRHEIGH/3
-
-        UTILTEXT SUSSERTOD, #SCRWIDTH/2-230, #SCRHEIGH/2
-
-        TRAP    #SCRTRAP                ; SHOW GRAPHICS
-        JSR     LOOSE
 *~Font name~Courier New~
 *~Font size~10~
 *~Tab type~1~

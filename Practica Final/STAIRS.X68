@@ -16,10 +16,9 @@ STAIRSUPDT
             
             ; THE PLAYER IS IN THE POSITION OF THE STAIRS
             CMP.B   #1, (KEYOBTEINED)
-           ;  BNE     .NOKEY
+             BNE     .NOKEY
             JSR     KEYINIT
             JSR     STAIRSINIT
-            ;JSR     ENEMYINIT
 
 ; CREATE ENEMIES BASED ON LEVEL 
             CLR.L   D0

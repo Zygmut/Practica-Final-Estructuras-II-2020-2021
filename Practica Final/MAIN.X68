@@ -28,14 +28,13 @@
 
 START                       ; INITIALIZE SYSTEM-RELATED STUFF
             JSR     SYSINIT 
-            JSR     STATEGIN
+            JSR     STAINIT
             
 ; --- UPDATE ------------------------------------------------------------------
 
 .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
 
-            JSR     STATEGUP
-            
+            JSR     STAUPD
 ; --- WAIT SYNCH --------------------------------------------------------------
 
 .WINT       TST.B   (SCRINTCT)              ; WAIT FOR INTERRUPT
@@ -44,8 +43,7 @@ START                       ; INITIALIZE SYSTEM-RELATED STUFF
 
 ; --- PLOT --------------------------------------------------------------------
 
-            JSR     STATEGPL
-
+            JSR     STAPLOT
             TRAP    #SCRTRAP                ; SHOW GRAPHICS
             BRA     .LOOP                   ; MAIN LOOP
 
@@ -58,6 +56,7 @@ LOOSE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
 
 
 
