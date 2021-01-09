@@ -13,16 +13,22 @@ SHADDERPLOT
 
             CLR     D1                          ; LEFT BORDER
             CLR     D2           
-            MOVE.W  (PLAYERX), D3           
-            SUB.W   #((TILEDIM/2) + TILEDIM*2), D3
+            MOVE.W  (PLAYERX), D3       
+            MOVE.W  (TORCHRANGE), D5
+            MULU.W  #TILEDIM, D5
+            ADD.W   #(TILEDIM/2), D5      
+            SUB.W   D5, D3
             MOVE.W  #SCRHEIGH, D4
             MOVE.W  #87, D0
             TRAP    #15
 
                                                 ; RIGHT BORDER
               
-            MOVE.W  (PLAYERX), D1           
-            ADD.W   #((TILEDIM/2) + TILEDIM*2), D1
+            MOVE.W  (PLAYERX), D1   
+            MOVE.W  (TORCHRANGE), D5
+            MULU.W  #TILEDIM, D5
+            ADD.W   #(TILEDIM/2), D5 
+            ADD.W   D5, D1
             MOVE.W  #SCRWIDTH, D3
             MOVE.W  #87, D0
             TRAP    #15
@@ -32,19 +38,22 @@ SHADDERPLOT
             CLR     D1
             CLR     D2
             MOVE.W  #SCRWIDTH, D3
-            MOVE.W  (PLAYERY), D4          
-            SUB.W   #((TILEDIM/2) + TILEDIM*2), D4     
+            MOVE.W  (PLAYERY), D4 
+            MOVE.W  (TORCHRANGE), D5
+            MULU.W  #TILEDIM, D5
+            ADD.W   #(TILEDIM/2), D5          
+            SUB.W   D5, D4     
            
             MOVE.W  #SCRWIDTH, D3
             MOVE.W  #87, D0
             TRAP    #15
 
                                                ; BOTTOM BORDER
-              
-
-            
-            MOVE.W  (PLAYERY), D2          
-            ADD.W   #((TILEDIM/2) + TILEDIM*2), D2     
+            MOVE.W  (PLAYERY), D2
+            MOVE.W  (TORCHRANGE), D5
+            MULU.W  #TILEDIM, D5
+            ADD.W   #(TILEDIM/2), D5           
+            ADD.W   D5, D2     
             MOVE.W  #SCRWIDTH, D3
             MOVE.W  #SCRHEIGH, D4
             MOVE.W  #87, D0
