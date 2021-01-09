@@ -4,8 +4,6 @@ MAPUPDT
         RTS
 MAPPLOT
         MOVEM.L D0-D4, -(A7)
-
-        
         
         UTILPEN #TILEDARK
         UTILFILL #TILEDARK
@@ -20,13 +18,7 @@ MAPPLOT
         MOVE.W  #561, D1                    ; RIGHT BORDER                                
         MOVE.W  #SCRWIDTH, D3
         TRAP    #15
-
-        CLR     D0
-        CLR     D1
-
-        UTILPEN #TILEDETA
-        UTILFILL #TILEDETA
-
+        
         MOVEM.L (A7)+,D0-D4
 
         RTS

@@ -5,6 +5,7 @@ STAIRSINIT          ; RANDOM POSTION
             JSR     RNGY
             MOVE.W  D0, (STAIRSY)
             MOVE.L  (A7)+, D0
+            CLR     ONSTAIRS
             RTS
 STAIRSUPDT          
             MOVEM.L D0-D2/A1-A3, -(A7)
@@ -12,18 +13,18 @@ STAIRSUPDT
             MOVE.W  (STAIRSY), D1
             JSR     UTILCOLL
             CMP.B   #$FF, D2
-            BNE     .END
+            BNE     .ENDD
             
             ; THE PLAYER IS IN THE POSITION OF THE STAIRS
             CMP.B   #1, (KEYOBTEINED)
-             BNE     .NOKEY
+            BNE     .NOKEY
             JSR     KEYINIT
             JSR     STAIRSINIT
 
 ; CREATE ENEMIES BASED ON LEVEL 
             CLR.L   D0
             MOVE.W  #ENEMYID, D0
-            JSR     AGLFKIL         
+            JSR     AGLFKIL     ; KILLS ALL AGENTS WITH ID       
             MOVE.W (LEVEL), D1
             
 .ENEMYADD
@@ -39,14 +40,13 @@ STAIRSUPDT
             ADDQ.W  #1, (LEVEL)
             BRA     .END
 .NOKEY      ; SAME POSITION NO KEY
-
-            MOVE.W  #81, D0                      ; SET FILL CALL
-            MOVE.L  #0, D1                       ; SET FILL COLOR
-            TRAP    #15
-
-            UTILTEXT NOKEYSTRING, #SCRWIDTH/2-100, #SCRHEIGH/8  
+            MOVE.W  #1, (ONSTAIRS)
+            BRA     .END
             
+.ENDD
+            CLR     ONSTAIRS
 .END
+            
             MOVEM.L (A7)+, D0-D2/A1-A3
             RTS
             

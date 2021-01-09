@@ -22,19 +22,20 @@
             INCLUDE "ENEMY.X68"             ; ENEMY MANAGER
             INCLUDE "MISC.X68"              ; MISCELLANEOUS MANAGER
             INCLUDE "STATES.X68"            ; STATES MANAGER
+            INCLUDE "SHADDER.X68"           ; TORCH SHADDER
             
 
 ; --- INITIALIZE --------------------------------------------------------------
 
-START                       ; INITIALIZE SYSTEM-RELATED STUFF
+START                                       ; INITIALIZE SYSTEM-RELATED STUFF
             JSR     SYSINIT 
             JSR     STAINIT
             
 ; --- UPDATE ------------------------------------------------------------------
 
 .LOOP       TRAP    #KBDTRAP                ; READ KEYBOARD
-
             JSR     STAUPD
+            
 ; --- WAIT SYNCH --------------------------------------------------------------
 
 .WINT       TST.B   (SCRINTCT)              ; WAIT FOR INTERRUPT
@@ -56,6 +57,8 @@ LOOSE
             INCLUDE "SYSVAR.X68"
             INCLUDE "VAR.X68"
             END    START
+
+
 
 
 

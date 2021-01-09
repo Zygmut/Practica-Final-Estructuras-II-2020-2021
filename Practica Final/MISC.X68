@@ -5,13 +5,14 @@ MISCUPDT
         
 MISCPLOT
         JSR .LVLPLOT
+        JSR .NOOKEYPLOT
         RTS
 
 
 .LVLPLOT
         MOVEM.L D0-D2/A1, -(A7)
         
-        UTILFILL #TILEDARK      
+        UTILFILL #00000000      
 
         LEA     LEVELSTRING, A1
         CLR.L   D1
@@ -21,3 +22,12 @@ MISCPLOT
         
         MOVEM.L (A7)+, D0-D2/A1
         RTS 
+
+.NOOKEYPLOT
+        CMP     #1, (ONSTAIRS)
+        BNE     .END     
+        MOVEM.L D0-D2/A1, -(A7)
+        UTILTEXT NOKEYSTRING, #SCRWIDTH/2-100, #SCRHEIGH/8  
+        MOVEM.L (A7)+, D0-D2/A1
+.END        
+        RTS
