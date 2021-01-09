@@ -79,6 +79,7 @@ STAMMI
             MOVE.L  (A7)+, D0
             CLR     (LEVEL)
             CLR     (TORCHSHADDER)
+            MOVE.W  #3, TORCHRANGE
             RTS
 
 STAMMU
@@ -216,11 +217,22 @@ STAGPI
 
 STAGPU
 ; STAGE UPDATE
-            JSR     PLAYERUPDT
+            
+            CMP.W   #8, (LEVEL)
+            BEQ     .CP1
+            CMP.W   #15, (LEVEL)
+            BEQ     .CP2
+
+.CLASS      JSR     PLAYERUPDT
             JSR     KEYUPDT
             JSR     STAIRSUPDT
             JMP     AGLUPDT
-
+.CP1
+            MOVE.W #2, (TORCHRANGE)
+            BRA    .CLASS
+.CP2
+            MOVE.W #1, (TORCHRANGE)
+            BRA     .CLASS
 STAGPP
 ; STAGE PLOT
             JSR     MAPPLOT
@@ -371,8 +383,6 @@ STADMP
 .END  
         MOVEM.L (A7)+,D0-D4/A1
         RTS
-
-
 
 
 *~Font name~Courier New~
