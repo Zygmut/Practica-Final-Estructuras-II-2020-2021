@@ -1,8 +1,7 @@
 ; =============================================================================
-; TITLE    : EXAMPLE GAME (MAIN PROGRAM)
-; AUTHOR   : ANTONI BURGUERA
-; HISTORY  : 10-OCT-2020 - CREATION
-;            11-OCT-2020 - MINOR CHANGES
+; TITLE    : MAIN PROGRAM
+; AUTHOR   : RUBEN PALMER PEREZ 
+; HISTORY  : 
 ; =============================================================================
             OPT     MEX
             ORG     $1000

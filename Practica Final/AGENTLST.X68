@@ -81,9 +81,13 @@ AGLKILL     EQU     DMMFREE
 ; NOTE     - IT IS JUST A WRAPPER FOR DMMFREE
 ; -----------------------------------------------------------------------------
 
+;------------------------------------------------------------------------------
 AGLFKIL
-; KILLS ALL AGENTS WITH ID 'X'
-; INPUT    - D0 AGENT ID
+; DES 	:	KILLS ALL AGENTS WITH ID 'X'
+; IN	:	D0 AGENT ID
+; OUT   : 	NONE
+; MOD	:  	REMOVES ALL AGENTS WITH ID D0. MEMORY
+;------------------------------------------------------------------------------
             MOVEM.L A0-A1,-(A7)
             JSR     DMMFRSTO
 .LOOP       CMP.L   #0, A0

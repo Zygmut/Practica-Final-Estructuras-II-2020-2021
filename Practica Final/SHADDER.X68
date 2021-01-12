@@ -1,10 +1,10 @@
-SHADDERINIT
-
-            RTS
-SHADDERUPDT
-
-            RTS
+;-----------------------------------------------------------
 SHADDERPLOT
+; DES	:	PLOTS THE TORCH SHADDER ON CENTERED ON THE PLAYER
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;-----------------------------------------------------------
             MOVEM.L D0-D4, -(A7)
 
             UTILPEN #TILEDDARK

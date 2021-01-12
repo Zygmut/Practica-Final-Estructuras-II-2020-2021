@@ -1,16 +1,28 @@
 ; =============================================================================
 ; TITLE    : PLAYER MANAGER
-; AUTHOR   : 
+; AUTHOR   : RUBEN PALMER PEREZ 
 ; COMMENTS : 
 ; =============================================================================
 
-
+;---------------------------------------------------------------------
 PLAYERINIT
+; DES	:	INIT METHOD FOR THE PLAYER. SET PLAYER TO CENTER
+; IN 	:	NONE
+; OUT	:	NONE
+; MOD	:	(PLAYERX) WITH X COORDINATE
+;		(PLAYERY) WITH Y COORDINATE
+;---------------------------------------------------------------------
             MOVE.W #SCRWIDTH/2, (PLAYERX)       ; SET PLAYER TO CENTER
             MOVE.W #SCRHEIGH/2, (PLAYERY)       ; SET PLAYER TO CENTER
             RTS
 
+;---------------------------------------------------------------------
 PLAYERUPDT  
+; DES	:	CHECKS IF PLAYER HAS TO MOVE SOMEWHERE
+; IN	:	NONE
+; OUT 	:	NONE
+; MOD	:	(PLAYERX)||(PLAYERY) DEPENDS ON MOVEMENT
+;---------------------------------------------------------------------
 
             BTST.B  #0, (SCRCYCCT)
             BNE     .END  
@@ -56,7 +68,13 @@ PLAYERUPDT
 .END
             RTS
 
+;-------------------------------------------------------------------
 PLAYERPLOT
+; DES	:	PLOTS THE PLAYER GRAPHICS
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;-------------------------------------------------------------------
             MOVEM.L D0-D4, -(A7)
             UTILPEN #TILELIGH                         
 

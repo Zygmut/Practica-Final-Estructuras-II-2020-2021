@@ -1,9 +1,8 @@
 ; =============================================================================
 ; TITLE    : PSEUDO-RANDOM NUMBER GENERATOR
-; AUTHOR   : ANTONI BURGUERA
+; AUTHOR   : RUBEN PALMER PEREZ 
 ; COMMENTS : VERY LAZY AND STUPID "ALGORITHM" IMPLEMENTED.
-; HISTORY  : XX-XXX-201X - CREATION
-;            11-OCT-2020 - MINOR CHANGES
+; HISTORY  : 
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
@@ -40,7 +39,7 @@ RNGX
 .NOVERFLOW            
             MOVE.L  (A7)+, A0
             RTS
-
+; -----------------------------------------------------------------------------
 RNGY
 ; PROVIDES A PSEUDO-RANDOM BYTE
 ; INPUT    - NONE

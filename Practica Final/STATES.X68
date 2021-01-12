@@ -1,8 +1,7 @@
 ; =============================================================================
 ; TITLE    : GAME STATE MANAGEMENT
-; AUTHOR   : ANTONI BURGUERA
-; HISTORY  : XX-XXX-201X - CREATION
-;            11-OCT-2020 - MINOR CHANGES
+; AUTHOR   : RUBEN PALMER PEREZ
+; HISTORY  : 
 ; =============================================================================
 
 ; -----------------------------------------------------------------------------
@@ -41,7 +40,7 @@ STAUPD
             JSR     (A0)
             MOVEM.L (A7)+,D0/A0
             RTS
-.INITBL     DC.L    STAMMI,STAGPI,STADMI
+.INITBL     DC.L    STAMMI,STAGPI,STAEMPTY
 .UPDTBL     DC.L    STAMMU,STAGPU,STADMU
 
 ; -----------------------------------------------------------------------------
@@ -71,8 +70,13 @@ STAEMPTY
 ; NOTE     - JUST A PLACEHOLDER. NOTHING TO DO.
 ; -----------------------------------------------------------------------------
             RTS
+;------------------------------------------------------------------------------
 STAMMI
-; STATE MAIN MENU INIT
+; DES	:	MAIN MENU STATE INIT
+; IN 	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;------------------------------------------------------------------------------
             MOVE.L  D0, -(A7)
             MOVE.W  #7, D0
             JSR     AGLFKIL
@@ -82,8 +86,13 @@ STAMMI
             MOVE.W  #3, TORCHRANGE
             RTS
 
+;------------------------------------------------------------------------------
 STAMMU
-; STATE MAIN MENU UPDATE
+; DES	:	MAIN MENU STATE UPDATE. CHECKS IF THE PLAYER HAS CLICKED ANY BUTTON ON SCREEN
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;------------------------------------------------------------------------------
             MOVEM.L D0-D3, -(A7)
 
             MOVE.W  #60, D0
@@ -128,8 +137,13 @@ STAMMU
             MOVEM.L (A7)+, D0-D3
             RTS
 
+;------------------------------------------------------------------------------
 STAMMP
-; STATE MAIN MENU PLOT
+; DES	:	MAIN MENU STATE PLOT
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;------------------------------------------------------------------------------
             MOVEM.L D0-D1/A1, -(A7)
             MOVE.W  #((80-24)/2)<<8|5, D1
             MOVE.B  #11, D0
@@ -154,11 +168,8 @@ STAMMP
             MOVE.W  #13, D0
             TRAP    #15
 
-            
-
             BTST.B  #4, (SCRCYCCT)  ; TIMER 
             BEQ     .END
-            
             
             UTILFILL #$00000000
             UTILPEN #$00FFFFFF
@@ -206,17 +217,26 @@ STAMMP
             MOVEM.L (A7)+, D0-D1/A1
            ;  UTILTEXT NEXTSTR, #SCRWIDTH/2, #SCRHEIGH-30
             RTS
-
+;------------------------------------------------------------------------------
 STAGPI
-; STAGE INIT
-            JSR     RNDINIT
+; DES	:	GAME PLAY STATE INIT
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;------------------------------------------------------------------------------
+
+	    JSR     RNDINIT
             JSR     PLAYERINIT
             JSR     KEYINIT
             JMP     STAIRSINIT
            
-
+;------------------------------------------------------------------------------
 STAGPU
-; STAGE UPDATE
+; DES	:	GAME PLAY STATE UPDATE. 
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	(TORCHRANGE) WHENEVER IT NEEDS TO BE MODIFIED "DIFFICULTY"
+;------------------------------------------------------------------------------
             
             CMP.W   #8, (LEVEL)
             BEQ     .CP1
@@ -233,8 +253,14 @@ STAGPU
 .CP2
             MOVE.W #1, (TORCHRANGE)
             BRA     .CLASS
+
+;------------------------------------------------------------------------------
 STAGPP
-; STAGE PLOT
+; DES	:	GAME PLAY STATE PLOT
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;------------------------------------------------------------------------------
             JSR     MAPPLOT
             JSR     PLAYERPLOT
             JSR     KEYPLOT
@@ -249,12 +275,14 @@ STAGPP
             JSR     MISCPLOT
             RTS
 
-STADMI
-; STATE DEATH MENU INIT
 
-            RTS
-
+;------------------------------------------------------------------------------
 STADMU
+; DES	:	DEATH MENU STATE UPDATE. CHECKS IF PLAYER HAS CLICKED ANY BUTTON
+; IN 	:	NONE
+; OUT	:	NONE
+;MOD	:	NONE
+;------------------------------------------------------------------------------
 ; STATE DEATH MENU UPDATE
             MOVEM.L D0-D3, -(A7)
 
@@ -300,8 +328,13 @@ STADMU
             MOVEM.L (A7)+, D0-D3
             RTS
 
+;------------------------------------------------------------------------------
 STADMP
-; STATE DEATH MENU PLOT
+; DES	:	DEATH MENU STATE PLOT
+; IN	:	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;------------------------------------------------------------------------------
         MOVEM.L D0-D4/A1, -(A7)
             ; -- BLACK SQUARE ---
         UTILPEN #0                       

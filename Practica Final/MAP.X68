@@ -1,8 +1,10 @@
-MAPINIT
-        RTS      
-MAPUPDT
-        RTS
+;-------------------------------------------------------
 MAPPLOT
+; DES	:	PLOTS MAP BORDERS
+; IN 	: 	NONE
+; OUT	:	NONE
+; MOD	:	NONE
+;-------------------------------------------------------
         MOVEM.L D0-D4, -(A7)
         
         UTILPEN #TILEDARK
